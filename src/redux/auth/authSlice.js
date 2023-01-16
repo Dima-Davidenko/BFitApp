@@ -5,10 +5,31 @@ const initialState = {
   user: {
     username: '',
     email: '',
+    id: '',
   },
+  refreshToken: '',
   sid: '',
   isLoggedIn: false,
   isRefreshing: false,
+  error: '',
+};
+
+const handleUserLogin = (state, { payload: { sid, refreshToken, user } }) => {
+  state.error = '';
+  state.isRefreshing = false;
+  state.isLoggedIn = true;
+  state.sid = sid;
+  state.refreshToken = refreshToken;
+  state.user.username = user.username;
+  state.user.email = user.email;
+  state.user.id = user.id;
+};
+
+const handleAuthReject = (state, { payload }) => {
+  state.error = payload;
+};
+const handlePendingRequest = state => {
+  state.isRefreshing = true;
 };
 
 const authSlice = createSlice({
@@ -17,30 +38,20 @@ const authSlice = createSlice({
   reducers: {},
   extraReducers: builder => {
     builder
-      .addCase(register.fulfilled, (state, action) => {
-        state.sid = action.payload.sid;
-      })
-      .addCase(logIn.fulfilled, (state, action) => {
-        state.user.username = action.payload.user.username;
-        state.user.email = action.payload.user.email;
-        state.isLoggedIn = true;
-      })
+      .addCase(register.fulfilled, handleUserLogin)
+      .addCase(logIn.fulfilled, handleUserLogin)
+      .addCase(refreshUser.fulfilled, handleUserLogin)
       .addCase(logOut.fulfilled, () => {
         return initialState;
       })
-      .addCase(refreshUser.pending, state => {
-        state.isRefreshing = true;
-      })
-      .addCase(refreshUser.fulfilled, (state, action) => {
-        state.isRefreshing = false;
-        state.user = { ...action.payload, token: state.user.token };
-        state.isLoggedIn = true;
-      })
-      .addCase(refreshUser.rejected, state => {
-        state.isRefreshing = false;
-        state.sid = '';
-      });
+      .addCase(register.pending, handlePendingRequest)
+      .addCase(logIn.pending, handlePendingRequest)
+      .addCase(refreshUser.pending, handlePendingRequest)
+      .addCase(logOut.pending, handlePendingRequest)
+      .addCase(register.rejected, handleAuthReject)
+      .addCase(logIn.rejected, handleAuthReject)
+      .addCase(refreshUser.rejected, handleAuthReject)
+      .addCase(logOut.rejected, handleAuthReject);
   },
 });
-
 export const authReducer = authSlice.reducer;
