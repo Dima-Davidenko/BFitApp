@@ -13,8 +13,11 @@ const clearAuthHeader = () => {
 };
 
 export const register = createAsyncThunk('auth/register', async (credentials, thunkAPI) => {
+  const { email, password } = credentials;
   try {
-    const { data } = await axios.post('/auth/register', credentials);
+    await axios.post('/auth/register', credentials);
+    const { data } = await axios.post('/auth/login', { email, password });
+    setAuthHeader(data.accessToken);
     return data;
   } catch (error) {
     toast.error(`Please use another email adress.`);
@@ -44,23 +47,26 @@ export const logOut = createAsyncThunk('auth/logout', async (_, thunkAPI) => {
   }
 });
 
-export const refreshUser = createAsyncThunk('auth/refresh', async (_, thunkAPI) => {
-  const state = thunkAPI.getState();
-  const persistedSid = state.auth.sid;
-  if (!persistedSid) {
-    return thunkAPI.rejectWithValue('');
-  }
+export const refreshUser = createAsyncThunk('auth/refresh', async (oldSid, thunkAPI) => {
   const toastId = toast.loading('Перевіряємо дані користувача');
+  const state = thunkAPI.getState();
+  const refreshToken = state.auth.refreshToken;
+  setAuthHeader(refreshToken);
   try {
-    const { data } = await axios.post('/auth/refresh', { sid: persistedSid });
-    setAuthHeader(data.newAccessToken);
+    const {
+      data: { newAccessToken, newRefreshToken: refreshToken, sid },
+    } = await axios.post('/auth/refresh', { sid: oldSid });
+    setAuthHeader(newAccessToken);
+    const {
+      data: { username, email, id },
+    } = await axios.get('/user');
     toast.update(toastId, {
-      render: `Вітаємо ${data.name}!`,
+      render: `Вітаємо ${username}!`,
       type: 'success',
       isLoading: false,
       autoClose: 3000,
     });
-    return data;
+    return { user: { username, email, id }, sid, refreshToken };
   } catch (error) {
     toast.update(toastId, {
       render: `Виникла помилка ${error.message}!`,
