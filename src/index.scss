@@ -1,1 +1,18 @@
 @import '~/node_modules/modern-normalize/modern-normalize.css';
+
+.loggedOut {
+    @media (min-width: 768px) {
+        background-image: url('../src/images/tablet@1x.png'),
+                          url('../src/images/spot-tablet.png');
+        background-size: auto auto ;
+        background-repeat: no-repeat;
+        background-position: right;
+          }
+
+    @media (min-width: 1024px) {
+    background-image: url('../src/images/display@1x.png'),
+                      url('../src/images/spot.png');
+    
+      }
+    
+}
