@@ -15,6 +15,7 @@ import PrivateRoute from './Routes/PrivateRoute/PrivateRoute';
 import ProtectedRoute from './Routes/ProtectedRoute/ProtectedRoute';
 import SharedLayout from './SharedLayout/SharedLayout';
 import MainAppBar from './MainAppBar/MainAppBar';
+import { DiaryProductsList } from './DiaryProductsList/DiaryProductsList';
 
 export const App = () => {
   const dispatch = useDispatch();
@@ -29,7 +30,7 @@ export const App = () => {
   }, [dispatch, isLoggedIn, sid]);
 
   return (
-    <div className="container">
+    <div className={isLoggedIn ? 'container' : 'container loggedOut'}>
       <Routes>
         <Route path="" element={<MainAppBar />}>
           <Route
@@ -60,7 +61,7 @@ export const App = () => {
             path="diary"
             element={
               <PrivateRoute defaultRoute="/">
-                <Diary />
+                <DiaryProductsList />
               </PrivateRoute>
             }
           />
