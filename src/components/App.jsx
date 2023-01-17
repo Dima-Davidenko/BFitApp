@@ -14,6 +14,7 @@ import Registration from './Registration/Registration';
 import PrivateRoute from './Routes/PrivateRoute/PrivateRoute';
 import ProtectedRoute from './Routes/ProtectedRoute/ProtectedRoute';
 import SharedLayout from './SharedLayout/SharedLayout';
+import MainAppBar from './MainAppBar/MainAppBar';
 
 export const App = () => {
   const dispatch = useDispatch();
@@ -30,7 +31,7 @@ export const App = () => {
   return (
     <div className="container">
       <Routes>
-        <Route path="" element={<SharedLayout />}>
+        <Route path="" element={<MainAppBar />}>
           <Route
             index
             element={
