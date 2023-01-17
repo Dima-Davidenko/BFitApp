@@ -14,6 +14,7 @@ import Registration from './Registration/Registration';
 import PrivateRoute from './Routes/PrivateRoute/PrivateRoute';
 import ProtectedRoute from './Routes/ProtectedRoute/ProtectedRoute';
 import SharedLayout from './SharedLayout/SharedLayout';
+import { DiaryProductsList } from './DiaryProductsList/DiaryProductsList';
 
 export const App = () => {
   const dispatch = useDispatch();
@@ -59,7 +60,7 @@ export const App = () => {
             path="diary"
             element={
               <PrivateRoute defaultRoute="/">
-                <Diary />
+                <DiaryProductsList />
               </PrivateRoute>
             }
           />

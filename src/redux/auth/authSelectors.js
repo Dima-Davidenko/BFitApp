@@ -11,3 +11,4 @@ export const selectSid = s => {
 export const selectUser = s => {
   return s.auth.user;
 };
+export const selectUserId = s => s.auth.user.id;

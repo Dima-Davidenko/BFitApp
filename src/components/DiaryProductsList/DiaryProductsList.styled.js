@@ -1,8 +1,8 @@
-import styled from "styled-components";
+import styled from '@emotion/styled';
 
 export const List = styled.ul`
-    display: flex;
-    flex-direction: column;
+  display: flex;
+  flex-direction: column;
   @media (min-width: 426px) and (max-width: 1023px) {
     overflow-y: scroll;
     height: 244px;
@@ -16,4 +16,4 @@ export const List = styled.ul`
   &.hidden {
     overflow: hidden;
   }
-` 
+`;

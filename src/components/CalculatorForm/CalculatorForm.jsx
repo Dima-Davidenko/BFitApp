@@ -1,16 +1,33 @@
 import {
   Box,
   Button,
-  TextField,
   FormControl,
-  Typography,
   FormControlLabel,
+  FormLabel,
   Radio,
   RadioGroup,
-  FormLabel,
+  TextField,
+  Typography,
 } from '@mui/material';
+import { useSelector } from 'react-redux';
+import { selectUserId } from 'redux/auth/authSelectors';
+import { useDailyRateMutation, useUserDailyRateMutation } from 'redux/diet/dietApi';
 
 export default function CalculatorForm() {
+  const [postDailyRate, result] = useDailyRateMutation();
+  const [postUserDailyRate, resultUser] = useUserDailyRateMutation();
+  const userId = useSelector(selectUserId);
+  const handleFormSubmit = e => {
+    e.preventDefault();
+    const formData = new FormData(e.target);
+    const body = {};
+    for (const [key, value] of formData.entries()) {
+      body[key] = value;
+    }
+    // console.log(body);
+    // postDailyRate(body);
+    postUserDailyRate({ id: userId, body });
+  };
   return (
     <Box
       sx={{
@@ -44,6 +61,7 @@ export default function CalculatorForm() {
           alignItems: 'start',
           width: '100%',
         }}
+        onSubmit={handleFormSubmit}
       >
         <Box
           sx={{
@@ -69,6 +87,7 @@ export default function CalculatorForm() {
           >
             <TextField
               id="form__input-height"
+              name="height"
               label="Height"
               required
               sx={{
@@ -81,6 +100,7 @@ export default function CalculatorForm() {
             />
             <TextField
               id="form__input-age"
+              name="age"
               label="Age"
               required
               sx={{
@@ -93,6 +113,7 @@ export default function CalculatorForm() {
             />
             <TextField
               id="form__input-current-weight"
+              name="weight"
               label="Current weight"
               required
               sx={{
@@ -107,6 +128,7 @@ export default function CalculatorForm() {
           <Box>
             <TextField
               id="form__input-desired-weight"
+              name="desiredWeight"
               label="Desired weight"
               required
               sx={{
@@ -122,14 +144,14 @@ export default function CalculatorForm() {
                 width: 240,
               }}
             >
-              <FormLabel id="radio-buttons-group-label" required>
+              <FormLabel id="bloodType-label" required>
                 Blood type
               </FormLabel>
               <RadioGroup
                 row
-                aria-labelledby="demo-radio-buttons-group-label"
+                aria-labelledby="demo-bloodType-label"
                 defaultValue="female"
-                name="radio-buttons-group"
+                name="bloodType"
               >
                 <FormControlLabel
                   value="1"
