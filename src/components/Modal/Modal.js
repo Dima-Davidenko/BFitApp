@@ -16,11 +16,14 @@ import {
   ProdList,
   Button,
 } from './Modal.styled';
+import { useDailyRateMutation } from 'redux/diet/dietApi';
 
-export const Modal = ({
-  closeModalHandler,
-  userData: { dailyCalories, notRecommendedProducts },
-}) => {
+export const Modal = ({ closeModalHandler }) => {
+  const notRecommendedProducts = [];
+  const [_, result] = useDailyRateMutation({
+    fixedCacheKey: 'dailyRate',
+  });
+  const dailyCalories = result?.data?.dailyRate ?? 0;
   const escKeyHandler = e => {
     if (e.keyCode === 27) {
       closeModalHandler();
@@ -62,43 +65,28 @@ export const Modal = ({
         <ContentWrap>
           <ModalTitle>Your recommended daily calorie intake is</ModalTitle>
           <KcalCounter>
-            {dailyCalories}
-            <span> ccal</span>
+            {result?.status === 'pending' && <span>Loading...</span>}
+            {dailyCalories > 0 && (
+              <>
+                {dailyCalories.toFixed(0)}
+                <span> ccal</span>
+              </>
+            )}
           </KcalCounter>
-          <Text>Foods you should not eat</Text>
-          <ProdList>
-            {notRecommendedProducts?.map(product => (
-              <li key={product}>{product}</li>
-            ))}
-          </ProdList>
+          {notRecommendedProducts.length > 0 && (
+            <>
+              <Text>Foods you should not eat</Text>
+              <ProdList>
+                {notRecommendedProducts?.map(product => (
+                  <li key={product}>{product}</li>
+                ))}
+              </ProdList>
+            </>
+          )}
+
           <Button onClick={onBtnClickHandler}>Start losing weight</Button>
         </ContentWrap>
       </ModalDiv>
     </Overlay>
   );
 };
-
-//+++++++++++++++++++++код для открытия модалки:
-
-// const [openModal, setOpenModal] = useState(false);
-// const closeModal = () => {
-//   setOpenModal(false);
-// };
-
-// const userDiet = {
-//   dailyCalories: 2800,
-//   notRecommendedProducts: [
-//     'Flour products',
-//     'Milk',
-//     'Red meat',
-//     'Smoked meats']
-// }
-
-//++++++++++++++++++++
-
-{
-  /* <button onClick={() => setOpenModal(true)} >Открыть модалку</button>
-{openModal && <Modal closeModalHandler={closeModal} userData={userDiet} />}  */
-}
-
-//+++++++++++++++++++++++

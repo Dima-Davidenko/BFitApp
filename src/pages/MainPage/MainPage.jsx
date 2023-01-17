@@ -1,8 +1,12 @@
-import React from 'react';
+import React, { useState } from 'react';
 import CalculatorForm from 'components/CalculatorForm/CalculatorForm';
 import Container from '@mui/material/Container';
+import { Modal } from 'components/Modal';
 
 const MainPage = () => {
+  const [modal, setModal] = useState(false);
+  const closeModal = () => setModal(false);
+  const openModal = () => setModal(true);
   return (
     <Container
       sx={{
@@ -23,7 +27,8 @@ const MainPage = () => {
         },
       }}
     >
-      <CalculatorForm />
+      <CalculatorForm showModalHandler={openModal} />
+      {modal && <Modal closeModalHandler={closeModal} />}
     </Container>
   );
 };
