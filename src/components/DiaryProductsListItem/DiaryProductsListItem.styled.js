@@ -1,4 +1,4 @@
-import styled from 'styled-components';
+import styled from '@emotion/styled';
 
 export const Item = styled.li`
   display: flex;
@@ -15,7 +15,7 @@ export const Item = styled.li`
     text-align: left;
     font-family: 'VerdanaRegular, sans-serif';
     width: 130px;
-    border-bottom: 1px solid #E0E0E0;
+    border-bottom: 1px solid #e0e0e0;
     padding: 8px 0;
     @media (min-width: 426px) and (max-width: 1023px) {
       width: 240px;
@@ -30,7 +30,7 @@ export const Item = styled.li`
     text-align: right;
     font-family: 'VerdanaRegular, sans-serif';
     width: 49px;
-    border-bottom: 1px solid #E0E0E0;
+    border-bottom: 1px solid #e0e0e0;
     margin: 0 8px;
     padding: 8px 0;
     @media (min-width: 426px) and (max-width: 1023px) {
@@ -46,7 +46,7 @@ export const Item = styled.li`
     text-align: right;
     font-family: 'VerdanaRegular, sans-serif';
     width: 58px;
-    border-bottom: 1px solid #E0E0E0;
+    border-bottom: 1px solid #e0e0e0;
     padding: 8px 0;
     @media (min-width: 426px) and (max-width: 1023px) {
       width: 107px;

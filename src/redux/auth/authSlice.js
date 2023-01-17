@@ -8,18 +8,20 @@ const initialState = {
     id: '',
   },
   refreshToken: '',
+  accessToken: '',
   sid: '',
   isLoggedIn: false,
   isRefreshing: false,
   error: '',
 };
 
-const handleUserLogin = (state, { payload: { sid, refreshToken, user } }) => {
+const handleUserLogin = (state, { payload: { sid, refreshToken, user, accessToken } }) => {
   state.error = '';
   state.isRefreshing = false;
   state.isLoggedIn = true;
   state.sid = sid;
   state.refreshToken = refreshToken;
+  state.accessToken = accessToken;
   state.user.username = user.username;
   state.user.email = user.email;
   state.user.id = user.id;

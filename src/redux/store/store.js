@@ -12,6 +12,8 @@ import {
 
 import storage from 'redux-persist/lib/storage';
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
+import { dietApi } from 'redux/diet/dietApi';
+import { dateReducer } from 'redux/date/dateSlice';
 
 const persistConfig = {
   key: 'root',
@@ -23,6 +25,8 @@ const persistedReducer = persistReducer(persistConfig, authReducer);
 
 const rootReducer = combineReducers({
   auth: persistedReducer,
+  [dietApi.reducerPath]: dietApi.reducer,
+  date: dateReducer,
 });
 
 export const store = configureStore({
@@ -32,7 +36,7 @@ export const store = configureStore({
       serializableCheck: {
         ignoredActions: [FLUSH, REHYDRATE, PAUSE, PERSIST, PURGE, REGISTER],
       },
-    }),
+    }).concat(dietApi.middleware),
 });
 
 export const persistor = persistStore(store);

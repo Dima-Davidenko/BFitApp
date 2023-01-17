@@ -29,7 +29,7 @@ export const logIn = createAsyncThunk('auth/login', async (credentials, thunkAPI
   try {
     const { data } = await axios.post('/auth/login', credentials);
     setAuthHeader(data.accessToken);
-    toast.success(`Nice to see you again, ${data.user.name}!`);
+    toast.success(`Nice to see you again, ${data.user.username}!`);
     return data;
   } catch (error) {
     toast.error(`Wrong email or password. Please try again.`);
@@ -57,16 +57,16 @@ export const refreshUser = createAsyncThunk('auth/refresh', async (oldSid, thunk
       data: { newAccessToken, newRefreshToken: refreshToken, sid },
     } = await axios.post('/auth/refresh', { sid: oldSid });
     setAuthHeader(newAccessToken);
-    const {
-      data: { username, email, id },
-    } = await axios.get('/user');
+    const { data } = await axios.get('/user');
+
     toast.update(toastId, {
-      render: `Вітаємо ${username}!`,
+      render: `Вітаємо ${data.username}!`,
       type: 'success',
       isLoading: false,
       autoClose: 3000,
     });
-    return { user: { username, email, id }, sid, refreshToken };
+
+    return { user: data, sid, refreshToken, accessToken: newAccessToken };
   } catch (error) {
     toast.update(toastId, {
       render: `Виникла помилка ${error.message}!`,
