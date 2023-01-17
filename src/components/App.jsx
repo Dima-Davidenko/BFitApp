@@ -28,7 +28,7 @@ export const App = () => {
   }, [dispatch, isLoggedIn, sid]);
 
   return (
-    <div className={isLoggedIn ? 'container loggedIn' : 'container loggedOut'}>
+    <div className={isLoggedIn ? 'container' : 'container loggedOut'}>
       <Routes>
         <Route path="" element={<SharedLayout />}>
           <Route
