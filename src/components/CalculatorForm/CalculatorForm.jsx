@@ -13,9 +13,11 @@ import { useSelector } from 'react-redux';
 import { selectUserId } from 'redux/auth/authSelectors';
 import { useDailyRateMutation, useUserDailyRateMutation } from 'redux/diet/dietApi';
 
-export default function CalculatorForm() {
-  const [postDailyRate, result] = useDailyRateMutation();
-  const [postUserDailyRate, resultUser] = useUserDailyRateMutation();
+const CalculatorForm = ({ showModalHandler }) => {
+  const [postDailyRate] = useDailyRateMutation({
+    fixedCacheKey: 'dailyRate',
+  });
+  // const [postUserDailyRate, resultUser] = useUserDailyRateMutation();
   const userId = useSelector(selectUserId);
   const handleFormSubmit = e => {
     e.preventDefault();
@@ -25,8 +27,9 @@ export default function CalculatorForm() {
       body[key] = value;
     }
     // console.log(body);
-    // postDailyRate(body);
-    postUserDailyRate({ id: userId, body });
+    postDailyRate(body);
+    showModalHandler();
+    // postUserDailyRate({ id: userId, body });
   };
   return (
     <Box
@@ -193,4 +196,6 @@ export default function CalculatorForm() {
       </Box>
     </Box>
   );
-}
+};
+
+export default CalculatorForm;
