@@ -12,3 +12,4 @@ export const selectUser = s => {
   return s.auth.user;
 };
 export const selectUserId = s => s.auth.user.id;
+export const selectAccessToken = s => s.auth.accessToken;

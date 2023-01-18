@@ -2,15 +2,20 @@ import AddProductForm from 'components/AddProductForm/AddProductForm';
 import Calendar from 'components/Calendar/Calendar';
 import DaySummary from 'components/DaySummary/DaySummary';
 import { useSelector } from 'react-redux';
+import { selectAccessToken } from 'redux/auth/authSelectors';
 import { selectCurrentDate } from 'redux/date/dateSelector';
-import { useGetDayInfoQuery } from 'redux/diet/dietApi';
+import { useGetDayInfoQuery, useGetUserInfoQuery } from 'redux/diet/dietApi';
 import { DiaryProductsListItem } from '../DiaryProductsListItem/DiaryProductsListItem';
 import { List } from './DiaryProductsList.styled';
 
 export const DiaryProductsList = () => {
   const currentDate = useSelector(selectCurrentDate);
-  const { data } = useGetDayInfoQuery(currentDate, { skip: !currentDate });
-  console.log('data', data);
+  const accessToken = useSelector(selectAccessToken);
+  const { data: userInfo } = useGetUserInfoQuery();
+  const userAge = userInfo?.userData?.age;
+  const { data } = useGetDayInfoQuery(currentDate, {
+    skip: !currentDate || !accessToken || !userAge,
+  });
   const eatenProducts = data?.eatenProducts ?? [];
   console.log('eatenProducts', eatenProducts);
   return (

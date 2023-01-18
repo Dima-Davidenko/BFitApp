@@ -30,6 +30,7 @@ export const dietApi = createApi({
             },
           };
         },
+
         providesTags: ['userInfo'],
       }),
       getDayInfo: builder.query({

@@ -1,10 +1,20 @@
 import { useSelector } from 'react-redux';
+import { selectAccessToken } from 'redux/auth/authSelectors';
 import { selectCurrentDate } from 'redux/date/dateSelector';
-import { useGetDayInfoQuery, useUserDailyRateMutation } from 'redux/diet/dietApi';
+import {
+  useGetDayInfoQuery,
+  useGetUserInfoQuery,
+  useUserDailyRateMutation,
+} from 'redux/diet/dietApi';
 
 const DaySummary = () => {
-  const currentDay = useSelector(selectCurrentDate);
-  const { data: dayInfo } = useGetDayInfoQuery(currentDay, { skip: !currentDay });
+  const currentDate = useSelector(selectCurrentDate);
+  const accessToken = useSelector(selectAccessToken);
+  const { data: userInfo } = useGetUserInfoQuery();
+  const userAge = userInfo?.userData?.age;
+  const { data: dayInfo } = useGetDayInfoQuery(currentDate, {
+    skip: !currentDate || !accessToken || !userAge,
+  });
   // const [_, resulDailyRate] = useUserDailyRateMutation();
   // const notRecommended = resulDailyRate?.notAllowedProducts ?? [];
   const daySummary = dayInfo?.daySummary;
