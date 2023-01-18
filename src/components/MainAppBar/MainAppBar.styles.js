@@ -44,11 +44,12 @@ export const StyledSlimMomImg = styled.img`
   }
 `;
 export const AppBarStyles = {
-  width: {
-    mobile: '100%',
-    tablet: '100%',
-    laptop: '400px',
-  },
+  width: '100%',
+  // {
+  //   mobile: '100%',
+  //   tablet: '100%',
+  //   laptop: '400px',
+  // },
   paddingTop: {
     laptop: '80px',
   },

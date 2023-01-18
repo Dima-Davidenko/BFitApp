@@ -1,9 +1,16 @@
+import CloseIcon from '@mui/icons-material/Close';
 import MenuIcon from '@mui/icons-material/Menu';
+import { SvgIcon } from '@mui/material';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
 import IconButton from '@mui/material/IconButton';
 import Toolbar from '@mui/material/Toolbar';
+import UserMenu from 'components/UserMenu/UserMenu';
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { selectIsLoggedIn } from 'redux/auth/authSelectors';
 import { ReactComponent as AppLogo } from '../../assets/logo.svg';
+import AppLogoSlimMom from '../../assets/slimMom.svg';
 import css from './MainAppBar.module.scss';
 import {
   AppBarStyles,
@@ -12,14 +19,6 @@ import {
   StyledSlimMomImg,
   SvgIconStyles,
 } from './MainAppBar.styles';
-import { SvgIcon } from '@mui/material';
-import { useSelector } from 'react-redux';
-import { NavLink, useNavigate } from 'react-router-dom';
-import { selectIsLoggedIn } from 'redux/auth/authSelectors';
-import AppLogoSlimMom from '../../assets/slimMom.svg';
-import UserMenu from 'components/UserMenu/UserMenu';
-import CloseIcon from '@mui/icons-material/Close';
-import SubdirectoryArrowLeftIcon from '@mui/icons-material/SubdirectoryArrowLeft';
 
 const MainAppBar = () => {
   const isLoggedIn = useSelector(selectIsLoggedIn);

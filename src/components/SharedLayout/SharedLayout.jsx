@@ -1,10 +1,12 @@
 import MainAppBar from 'components/MainAppBar/MainAppBar';
+import NewAppBar from 'components/NewAppBar/NewAppBar';
 import { Outlet } from 'react-router-dom';
 
 const SharedLayout = () => {
   return (
     <div>
-      <MainAppBar />
+      {/* <MainAppBar /> */}
+      <NewAppBar />
       <Outlet />
     </div>
   );

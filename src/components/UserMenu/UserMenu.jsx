@@ -8,7 +8,7 @@ const UserMenu = () => {
   const { username } = useSelector(selectUser);
   const dispatch = useDispatch();
   return (
-    <div className={scss.containerName}>
+    <div className={scss.container}>
       <span className={scss.userName}> {username}</span>
       <button className={scss.logOut} onClick={() => dispatch(logOut())}>
         EXIT

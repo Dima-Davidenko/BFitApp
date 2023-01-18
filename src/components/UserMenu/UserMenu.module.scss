@@ -1,36 +1,45 @@
-.containerName {
-  width: 100%;
+.container {
+  position: absolute;
+  right: 0;
+  bottom: -42px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
   height: 40px;
-  background-color: #eff1f3;
+  @media screen and (min-width: 768px) {
+    right: 80px;
+    bottom: 18px;
+  }
   @media screen and (min-width: 1280px) {
-    display: block;
+    right: 80px;
+    bottom: 0;
   }
 }
 
 .userName {
+  display: block;
+  height: 30px;
+  padding-right: 10px;
   text-transform: uppercase;
-  flex-grow: 1;
   letter-spacing: 0.04em;
   font-family: Verdana;
   font-weight: 700;
   font-size: 14px;
-  line-height: 17px;
-  margin-top: 30px;
-  margin-left: 14px;
+  line-height: 30px;
+  border-right: 2px solid #e0e0e0;
+
   color: #212121;
 }
 .logOut {
+  display: block;
+  padding-left: 10px;
   text-transform: uppercase;
-  flex-grow: 1;
   letter-spacing: 0.04em;
   font-family: Verdana;
   font-weight: 700;
   font-size: 14px;
   line-height: 17px;
-  margin-top: 30px;
-  margin-left: 14px;
   color: #9b9faa;
   border: none;
-  border-left: solid #9b9faa 1px;
   background-color: transparent;
 }
