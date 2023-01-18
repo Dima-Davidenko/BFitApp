@@ -19,3 +19,7 @@
       url('../src/images/spot.png');
   }
 }
+
+body.modalOpen {
+  overflow: hidden;
+}
