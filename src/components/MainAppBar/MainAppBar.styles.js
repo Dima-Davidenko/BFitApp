@@ -1,70 +1,80 @@
 import styled from '@emotion/styled';
-
+import { NavLink } from 'react-router-dom';
 export const SvgIconStyles = {
   flexGrow: '1',
   display: 'flex',
   alignItems: {
-    md: 'center',
-    lg: 'end',
+    tablet: 'center',
+    laptop: 'end',
   },
+  marginTop: {
+    tablet: '20px',
+  },
+  marginLeft: {
+    tablet: '15px',
+    laptop: '0px',
+  },
+  cursor: 'pointer',
+};
+export const AppLogoStyles = {
+  display: 'flex',
+  position: 'realitive',
   width: {
-    xs: '44px',
-    md: '162px',
-    lg: '167px',
+    mobile: '46px',
+    tablet: '46px',
+    laptop: '167px',
   },
   height: {
-    xs: '44px',
-    md: '44px',
-    lg: '66px',
+    mobile: '44px',
+    tablet: '44px',
+    laptop: '71px',
   },
 };
-
-export const AppLogoStyles = {
-  position: 'realitive',
-};
-
 export const StyledSlimMomImg = styled.img`
   display: none;
-  @media screen and (min-width: ${p => p.theme.breakpoints.values.md}px) {
+  @media screen and (min-width: ${p => p.theme.breakpoints.values.tablet}px) {
     display: block;
+    width: 105px;
+    height: 16px;
+    margin-left: 10px;
+  }
+  @media screen and (min-width: ${p => p.theme.breakpoints.values.laptop}px) {
+    position: absolute;
+    margin-left: 37px;
   }
 `;
-
 export const AppBarStyles = {
   width: {
-    lg: '300px',
+    mobile: '100%',
+    tablet: '100%',
+    laptop: '400px',
   },
-  pt: {
-    lg: '80px',
+  paddingTop: {
+    laptop: '80px',
   },
   color: 'black',
   backgroundColor: 'transparent',
   boxShadow: 'none',
   borderBottom: {
-    xs: '4px solid #E0E0E0',
-    lg: 'none',
+    mobile: '4px solid #E0E0E0',
+    laptop: 'none',
   },
   height: {
-    xs: '80px',
-    lg: '160px',
+    mobile: '80px',
+    laptop: '160px',
   },
 };
 export const AppLogInButton = {
-  pt: '38px',
-  pr: '0px',
-  pl: '0px',
-  pb: {
-    xs: '36px',
-    sm: '36px',
-    md: '36px',
-  },
-  ml: {
-    xs: '32px',
-    sm: '0px',
-    md: '0px',
-  },
   flexGrow: '1',
   width: '60px',
+  textDecoration: 'none',
+  marginLeft: {
+    mobile: '32px',
+    tablet: '0px',
+    laptop: '0px',
+  },
+  display: { mobile: 'none', laptop: 'flex' },
+  flexGrow: '1',
   height: '17px',
   letterSpacing: '0.04em',
   fontFamily: 'Verdana',
@@ -73,27 +83,27 @@ export const AppLogInButton = {
   lineHeighte: '17px',
   color: '#212121',
 };
-export const AppRegistButton = {
-  pt: '38px',
-  pb: '23px',
-  pr: '0px',
-  pl: '0px',
-  ml: {
-    xs: '14px',
-    md: '24px',
-    lg: '24px',
-  },
-  flexGrow: '1',
-  letterSpacing: '0.04em',
-  fontFamily: 'Verdana',
-  fontWeight: '700',
-  fontSize: '14px',
-  lineHeighte: '17px',
-  color: '#9B9FAA',
-};
-export const MobMenuStyles = {
-  display: {
-    xs: 'none',
-    lg: 'none',
-  },
-};
+// export const AppRegistButton = {
+//   textDecoration: 'none',
+//   flexGrow: '1',
+//   letterSpacing: '0.04em',
+//   fontFamily: 'Verdana',
+//   fontWeight: '700',
+//   fontSize: '14px',
+//   lineHeighte: '17px',
+//   color: '#9B9FAA',
+//   marginTop: '30px',
+//   marginLeft: {
+//     mobiles: '14px',
+//     tablet: '24px',
+//   },
+// };
+
+export const StyledNavlink = styled(NavLink)`
+  @media screen and (min-width: ${p => p.theme.breakpoints.values.tablet}px) {
+    margin-left: 24px;
+  }
+  &.active {
+    color: #212121;
+  }
+`;

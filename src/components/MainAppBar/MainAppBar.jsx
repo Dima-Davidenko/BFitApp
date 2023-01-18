@@ -1,62 +1,95 @@
-import * as React from 'react';
+import MenuIcon from '@mui/icons-material/Menu';
 import AppBar from '@mui/material/AppBar';
 import Box from '@mui/material/Box';
-import Toolbar from '@mui/material/Toolbar';
-
-import Button from '@mui/material/Button';
 import IconButton from '@mui/material/IconButton';
-import MenuIcon from '@mui/icons-material/Menu';
+import Toolbar from '@mui/material/Toolbar';
+import { ReactComponent as AppLogo } from '../../assets/logo.svg';
+import css from './MainAppBar.module.scss';
 import {
   AppBarStyles,
-  AppLogInButton,
-  AppLogoSlimMomStyles,
   AppLogoStyles,
-  AppRegistButton,
-  MobMenuStyles,
+  StyledNavlink,
   StyledSlimMomImg,
   SvgIconStyles,
 } from './MainAppBar.styles';
-import { ReactComponent as AppLogo } from '../../assets/logo.svg';
-// import { ReactComponent as AppLogoSlimMom } from '../../assets/slimMom.svg';
 import { SvgIcon } from '@mui/material';
+import { useSelector } from 'react-redux';
+import { NavLink, useNavigate } from 'react-router-dom';
+import { selectIsLoggedIn } from 'redux/auth/authSelectors';
 import AppLogoSlimMom from '../../assets/slimMom.svg';
+import UserMenu from 'components/UserMenu/UserMenu';
+import CloseIcon from '@mui/icons-material/Close';
+import SubdirectoryArrowLeftIcon from '@mui/icons-material/SubdirectoryArrowLeft';
 
 const MainAppBar = () => {
+  const isLoggedIn = useSelector(selectIsLoggedIn);
+  const navigate = useNavigate();
   return (
-    <Box sx={{ flexGrow: 1 }}>
+    <Box sx={{ flexGrow: 1, width: '100%' }}>
       <AppBar position="static" sx={AppBarStyles}>
         <Toolbar>
-          <SvgIcon component="div" sx={SvgIconStyles}>
+          <SvgIcon
+            onClick={() => navigate('/')}
+            component="div"
+            sx={SvgIconStyles}
+          >
             <AppLogo sx={AppLogoStyles} />
             <StyledSlimMomImg src={AppLogoSlimMom} />
           </SvgIcon>
-          {/* <Box component="div" sx={{ display: { xs: 'none', sm: 'block' } }}>
-            <AppLogoFull sx={AppLogoSlimMomStyles} />
-          </Box> */}
           <Box
             sx={{
               display: 'flex',
               alignItems: {
-                xs: 'flex-end',
+                mobile: 'flex-end',
               },
             }}
           >
-            <Button sx={AppLogInButton}>Log In</Button>
-            <Button sx={AppRegistButton}>Registration</Button>
+            {!isLoggedIn && (
+              <>
+                <StyledNavlink className={css.navlink} to="/login">
+                  Log In
+                </StyledNavlink>
+                <StyledNavlink className={css.navlink} to="/registration">
+                  Registration
+                </StyledNavlink>
+              </>
+            )}
+            {isLoggedIn && (
+              <>
+                <UserMenu />
+                <div className={css.menulinks}>
+                  <StyledNavlink className={css.navlink} to="/diary">
+                    Diary
+                  </StyledNavlink>
+                  <StyledNavlink className={css.navlink} to="/calculator">
+                    Calculator
+                  </StyledNavlink>
+                </div>
+                <IconButton
+                  size="large"
+                  edge="end"
+                  color="inherit"
+                  aria-label="menu"
+                  sx={{ display: { mobile: 'flex', laptop: 'none' } }}
+                >
+                  <MenuIcon />
+                </IconButton>
+
+                <IconButton
+                  size="large"
+                  edge="end"
+                  color="inherit"
+                  aria-label="close"
+                  sx={{ display: { mobile: 'none', laptop: 'none' } }}
+                >
+                  <CloseIcon />
+                </IconButton>
+              </>
+            )}
           </Box>
-          <IconButton
-            size="large"
-            edge="end"
-            color="inherit"
-            aria-label="menu"
-            sx={MobMenuStyles}
-          >
-            <MenuIcon />
-          </IconButton>
         </Toolbar>
       </AppBar>
     </Box>
   );
 };
-
 export default MainAppBar;

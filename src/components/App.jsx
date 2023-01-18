@@ -32,7 +32,7 @@ export const App = () => {
   return (
     <div className={isLoggedIn ? 'container' : 'container loggedOut'}>
       <Routes>
-        <Route path="" element={<MainAppBar />}>
+        <Route path="" element={<SharedLayout />}>
           <Route
             index
             element={
