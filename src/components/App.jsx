@@ -15,6 +15,7 @@ import PrivateRoute from './Routes/PrivateRoute/PrivateRoute';
 import ProtectedRoute from './Routes/ProtectedRoute/ProtectedRoute';
 import SharedLayout from './SharedLayout/SharedLayout';
 import { DiaryProductsList } from './DiaryProductsList/DiaryProductsList';
+import 'index.scss';
 
 export const App = () => {
   const dispatch = useDispatch();
