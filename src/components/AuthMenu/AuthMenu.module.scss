@@ -1,0 +1,23 @@
+.navlink {
+  text-decoration: none;
+  text-transform: uppercase;
+  flex-grow: 1;
+  letter-spacing: 0.04em;
+  font-family: Verdana;
+  font-weight: 700;
+  font-size: 14px;
+  line-height: 17px;
+  margin-top: 30px;
+  margin-left: 14px;
+  color: #9b9faa;
+}
+
+.wrapper {
+  @media screen and (min-width: 1280px) {
+    display: flex;
+    align-items: flex-end;
+    height: 30px;
+    margin-left: 15px;
+    border-left: 2px solid #e0e0e0;
+  }
+}

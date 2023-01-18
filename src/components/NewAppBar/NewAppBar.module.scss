@@ -1,0 +1,43 @@
+.header {
+  position: relative;
+  height: 80px;
+  display: flex;
+  justify-content: space-between;
+  padding: 0 20px;
+  align-items: center;
+  border-bottom: 3px solid #e0e0e0;
+  @media screen and (min-width: 768px) {
+    padding: 0 32px;
+  }
+  @media screen and (min-width: 1280px) {
+    height: 155px;
+    justify-content: start;
+    align-items: flex-end;
+    border-bottom: none;
+  }
+}
+.logoWrapper {
+  position: relative;
+  display: flex;
+  align-items: center;
+  @media screen and (min-width: 1280px) {
+    width: 167px;
+    align-items: flex-end;
+  }
+}
+.logoBaba {
+  width: 44px;
+  height: 46px;
+  margin-right: 10px;
+  @media screen and (min-width: 1280px) {
+    width: 70px;
+    height: 66px;
+  }
+}
+.slimMom {
+  @media screen and (min-width: 1280px) {
+    position: absolute;
+    left: 60px;
+    bottom: 5px;
+  }
+}
