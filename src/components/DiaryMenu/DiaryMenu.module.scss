@@ -1,0 +1,12 @@
+.wrapper {
+  margin-left: 10px;
+  display: none;
+  @media screen and (min-width: 1280px) {
+    display: flex;
+  }
+}
+.diary {
+  border-left: 2px solid #e0e0e0;
+}
+.calc {
+}
