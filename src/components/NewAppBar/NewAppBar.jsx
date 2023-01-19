@@ -1,5 +1,6 @@
-import React from 'react';
+import React, { useState } from 'react';
 import MenuIcon from '@mui/icons-material/Menu';
+import CloseIcon from '@mui/icons-material/Close';
 import css from './NewAppBar.module.scss';
 import logoBaba from '../../assets/logo.svg';
 import slimMom from '../../assets/slimMom.svg';
@@ -8,15 +9,28 @@ import { IconButton } from '@mui/material';
 import { useSelector } from 'react-redux';
 import { selectIsLoggedIn } from 'redux/auth/authSelectors';
 import UserMenu from 'components/UserMenu/UserMenu';
-import { StyledSlimMom, StyledUserMenuContainer } from './NewAppBar.styles';
+import {
+  StyledMobileMenu,
+  StyledNavLink,
+  StyledSlimMom,
+  StyledUserMenuContainer,
+} from './NewAppBar.styles';
 import DiaryMenu from 'components/DiaryMenu/DiaryMenu';
+import { useNavigate } from 'react-router';
 
 const NewAppBar = () => {
+  const [menuOpen, setMenuOpen] = useState(false);
+  const navigate = useNavigate();
   const isLoggedIn = useSelector(selectIsLoggedIn);
+  const toggleModal = () => {
+    setMenuOpen(!menuOpen);
+    const body = document.querySelector('body');
+    body.classList.toggle('modalOpen');
+  };
   return (
-    <div>
+    <div className={css.container}>
       <header className={css.header}>
-        <div className={css.logoWrapper}>
+        <div onClick={() => navigate('/')} className={css.logoWrapper}>
           <img className={css.logoBaba} src={logoBaba} alt="logo" />
           <StyledSlimMom
             isLoggedIn={isLoggedIn}
@@ -36,13 +50,26 @@ const NewAppBar = () => {
               color="inherit"
               aria-label="menu"
               sx={{ display: { mobile: 'flex', laptop: 'none' } }}
+              onClick={toggleModal}
             >
-              <MenuIcon />
+              {menuOpen ? <CloseIcon /> : <MenuIcon />}
             </IconButton>
           </>
         )}
       </header>
       <StyledUserMenuContainer isLoggedIn={isLoggedIn} />
+      <StyledMobileMenu menuOpen={menuOpen}>
+        <StyledNavLink onClick={toggleModal} className={css.diary} to="/diary">
+          Diary
+        </StyledNavLink>
+        <StyledNavLink
+          onClick={toggleModal}
+          className={css.calc}
+          to="/calculator"
+        >
+          Calculator
+        </StyledNavLink>
+      </StyledMobileMenu>
     </div>
   );
 };
