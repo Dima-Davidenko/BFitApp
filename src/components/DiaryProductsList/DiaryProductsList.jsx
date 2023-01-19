@@ -2,7 +2,7 @@ import { useSelector } from 'react-redux';
 import { selectCurrentDate } from 'redux/date/dateSelector';
 import { useGetDayInfoQuery } from 'redux/diet/dietApi';
 import { DiaryProductsListItem } from '../DiaryProductsListItem/DiaryProductsListItem';
-import { Table, TableContainer, TableBody, Paper } from '@mui/material';
+import { Table, TableContainer, TableBody } from '@mui/material';
 
 export const DiaryProductsList = () => {
   const currentDate = useSelector(selectCurrentDate);

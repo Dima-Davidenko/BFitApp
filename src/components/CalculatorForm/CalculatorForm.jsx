@@ -29,7 +29,7 @@ const CalculatorForm = ({ showModalHandler }) => {
     for (const [key, value] of formData.entries()) {
       body[key] = value;
     }
-    // console.log(body);
+
     postDailyRate(body);
     postUserDailyRate({ id: userId, body });
     showModalHandler();
