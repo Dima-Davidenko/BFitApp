@@ -2,11 +2,12 @@ import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { logOut } from 'redux/auth/authOperations';
 import { dietApi } from 'redux/diet/dietApi';
-import { selectUser } from 'redux/auth/authSelectors';
+import { selectIsRefreshing, selectUser } from 'redux/auth/authSelectors';
 import scss from './UserMenu.module.scss';
 
 const UserMenu = () => {
   const { username } = useSelector(selectUser);
+  const isRefreshing = useSelector(selectIsRefreshing);
   const dispatch = useDispatch();
   return (
     <div className={scss.container}>
@@ -15,8 +16,8 @@ const UserMenu = () => {
         className={scss.logOut}
         onClick={() => {
           dispatch(logOut());
-          dispatch(dietApi.util.resetApiState());
         }}
+        disabled={isRefreshing}
       >
         EXIT
       </button>

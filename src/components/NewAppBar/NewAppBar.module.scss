@@ -21,6 +21,7 @@
 }
 .logoWrapper {
   cursor: pointer;
+  caret-color: transparent;
   position: relative;
   display: flex;
   align-items: center;
@@ -32,6 +33,7 @@
 .logoBaba {
   width: 44px;
   height: 46px;
+  caret-color: transparent;
   margin-right: 10px;
   @media screen and (min-width: 1280px) {
     width: 70px;
@@ -39,6 +41,7 @@
   }
 }
 .slimMom {
+  caret-color: transparent;
   @media screen and (min-width: 1280px) {
     position: absolute;
     left: 60px;

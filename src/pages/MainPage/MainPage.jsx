@@ -2,11 +2,21 @@ import React, { useState } from 'react';
 import CalculatorForm from 'components/CalculatorForm/CalculatorForm';
 import Container from '@mui/material/Container';
 import { Modal } from 'components/Modal';
+import { useDailyRateMutation } from 'redux/diet/dietApi';
+import { useNavigate } from 'react-router-dom';
 
 const MainPage = () => {
+  const [postDailyRate] = useDailyRateMutation({
+    fixedCacheKey: 'dailyRate',
+  });
+  const navigate = useNavigate();
   const [modal, setModal] = useState(false);
-  const closeModal = () => setModal(false);
   const openModal = () => setModal(true);
+  const onCloseModal = () => navigate('/registration');
+  const handleCalculatorFormSubmit = values => {
+    postDailyRate(values);
+    openModal();
+  };
   return (
     <Container
       sx={{
@@ -27,8 +37,8 @@ const MainPage = () => {
         },
       }}
     >
-      <CalculatorForm showModalHandler={openModal} />
-      {modal && <Modal closeModalHandler={closeModal} />}
+      <CalculatorForm onFormSubmit={handleCalculatorFormSubmit} />
+      {modal && <Modal closeModalHandler={onCloseModal} />}
     </Container>
   );
 };

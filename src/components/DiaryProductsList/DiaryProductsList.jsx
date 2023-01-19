@@ -17,7 +17,6 @@ export const DiaryProductsList = () => {
     skip: !currentDate || !accessToken || !userAge,
   });
   const eatenProducts = data?.eatenProducts ?? [];
-  console.log('eatenProducts', eatenProducts);
   return (
     <div>
       <Calendar />

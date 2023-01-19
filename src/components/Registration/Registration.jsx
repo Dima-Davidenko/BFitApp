@@ -1,11 +1,12 @@
 import React from 'react';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { register } from 'redux/auth/authOperations';
 
 import { Box, Button, TextField, Typography } from '@mui/material';
 
 import { NavLink } from 'react-router-dom';
 import styled from '@emotion/styled';
+import { selectIsRefreshing } from 'redux/auth/authSelectors';
 
 const styleBtn = {
   width: 182,
@@ -35,6 +36,7 @@ const StyledLink = styled(NavLink)`
 
 const Registration = () => {
   const dispatch = useDispatch();
+  const isRefreshing = useSelector(selectIsRefreshing);
   const handleSubmit = evt => {
     evt.preventDefault();
     const username = evt.target.elements.username.value;
@@ -138,7 +140,7 @@ const Registration = () => {
             },
           }}
         >
-          <Button type="submit" variant="contained" style={styleBtn}>
+          <Button type="submit" variant="contained" style={styleBtn} disabled={isRefreshing}>
             Register
           </Button>
           <StyledLink to="/login">Log in</StyledLink>

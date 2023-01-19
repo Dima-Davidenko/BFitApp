@@ -9,7 +9,7 @@ import { Route, Routes } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { refreshUser } from 'redux/auth/authOperations';
-import { selectIsLoggedIn, selectSid } from 'redux/auth/authSelectors';
+import { selectIsLoggedIn, selectIsRefreshing, selectSid } from 'redux/auth/authSelectors';
 import Registration from './Registration/Registration';
 import PrivateRoute from './Routes/PrivateRoute/PrivateRoute';
 import ProtectedRoute from './Routes/ProtectedRoute/ProtectedRoute';
@@ -17,10 +17,12 @@ import SharedLayout from './SharedLayout/SharedLayout';
 import MainAppBar from './MainAppBar/MainAppBar';
 import { DiaryProductsList } from './DiaryProductsList/DiaryProductsList';
 import 'index.scss';
+import { CircularProgress } from '@mui/material';
 
 export const App = () => {
   const dispatch = useDispatch();
   const isLoggedIn = useSelector(selectIsLoggedIn);
+  const isLoading = useSelector(selectIsRefreshing);
   let isRefreshing = useRef(false);
   const sid = useSelector(selectSid);
   useEffect(() => {
@@ -53,7 +55,7 @@ export const App = () => {
           <Route
             path="registration"
             element={
-              <ProtectedRoute defaultRoute="/diary">
+              <ProtectedRoute defaultRoute="/calculator">
                 <Registration />
               </ProtectedRoute>
             }
@@ -62,7 +64,7 @@ export const App = () => {
             path="diary"
             element={
               <PrivateRoute defaultRoute="/">
-                <DiaryProductsList />
+                <Diary />
               </PrivateRoute>
             }
           />
@@ -89,6 +91,13 @@ export const App = () => {
         pauseOnHover
         theme="light"
       />
+      {isLoading && (
+        <div
+          style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}
+        >
+          <CircularProgress size={200} />
+        </div>
+      )}
     </div>
   );
 };

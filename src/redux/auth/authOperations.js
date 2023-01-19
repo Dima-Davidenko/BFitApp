@@ -1,6 +1,7 @@
 import { createAsyncThunk } from '@reduxjs/toolkit';
 import axios from 'axios';
 import { toast } from 'react-toastify';
+import { dietApi } from 'redux/diet/dietApi';
 axios.defaults.baseURL = 'https://slimmom-backend.goit.global';
 
 const setAuthHeader = token => {
@@ -41,6 +42,8 @@ export const logOut = createAsyncThunk('auth/logout', async (_, thunkAPI) => {
   try {
     await axios.post('/auth/logout');
     clearAuthHeader();
+    const dispatch = thunkAPI.dispatch;
+    dispatch(dietApi.util.resetApiState());
   } catch (error) {
     toast.error(`Something went wrong. ${error.message}. Please try again.`);
     return thunkAPI.rejectWithValue(error.message);

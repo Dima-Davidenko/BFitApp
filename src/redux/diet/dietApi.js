@@ -41,7 +41,7 @@ export const dietApi = createApi({
             body: { date },
           };
         },
-        providesTags: ['dayInfo'],
+        providesTags: (_, _2, arg) => [{ type: 'dayInfo', id: arg }],
       }),
       dailyRate: builder.mutation({
         query: body => {
@@ -70,7 +70,7 @@ export const dietApi = createApi({
             body: { date, productId, weight },
           };
         },
-        invalidatesTags: ['dayInfo'],
+        invalidatesTags: (_, _2, { date }) => ['userInfo', { type: 'dayInfo', id: date }],
       }),
       deleteEatenProduct: builder.mutation({
         query: ({ dayId, eatenProductId }) => {
@@ -80,7 +80,7 @@ export const dietApi = createApi({
             body: { dayId, eatenProductId },
           };
         },
-        invalidatesTags: ['userInfo', 'dayInfo'],
+        invalidatesTags: (_, _2, { date }) => ['userInfo', { type: 'dayInfo', id: date }],
       }),
     };
   },

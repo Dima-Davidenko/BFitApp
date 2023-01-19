@@ -4,9 +4,8 @@ import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectAccessToken } from 'redux/auth/authSelectors';
 import { selectCurrentDate } from 'redux/date/dateSelector';
-import { updateCurrentDay, updateCurrentDayId } from 'redux/date/dateSlice';
+import { updateCurrentDayId } from 'redux/date/dateSlice';
 import {
-  dietApi,
   useAddEatenProductMutation,
   useGetDayInfoQuery,
   useGetUserInfoQuery,
@@ -54,13 +53,9 @@ const AddProductForm = () => {
   };
 
   const debouncedHandleChangeQuery = debounce(handleChangeQuery, 300);
-  // const productList = productsInfo.map(product => ({ label: product.title.ru, id: product._id }));
-  console.log('productsInfo', productsInfo);
-  console.log('searchProductError', searchProductError);
 
   return (
     <div>
-      {!userAge && <p>Input your data</p>}
       <form onSubmit={handleSubmit}>
         <Autocomplete
           // freeSolo

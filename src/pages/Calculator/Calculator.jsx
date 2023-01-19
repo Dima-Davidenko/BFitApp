@@ -1,8 +1,21 @@
 import React from 'react';
 import Container from '@mui/material/Container';
 import CalculatorForm from 'components/CalculatorForm/CalculatorForm';
+import { useUserDailyRateMutation } from 'redux/diet/dietApi';
+import { useSelector } from 'react-redux';
+import { selectUserId } from 'redux/auth/authSelectors';
+import { useNavigate } from 'react-router-dom';
 
 const Calculator = () => {
+  const [postUserDailyRate] = useUserDailyRateMutation({
+    fixedCacheKey: 'daily-rate',
+  });
+  const userId = useSelector(selectUserId);
+  const navigate = useNavigate();
+  const handleCalculatorFormSubmit = body => {
+    postUserDailyRate({ id: userId, body });
+    navigate('/diary');
+  };
   return (
     <Container
       sx={{
@@ -23,7 +36,7 @@ const Calculator = () => {
         },
       }}
     >
-      <CalculatorForm />
+      <CalculatorForm onFormSubmit={handleCalculatorFormSubmit} />
     </Container>
   );
 };
