@@ -11,36 +11,28 @@ export const DiaryProductsList = () => {
   const eatenProducts = data?.eatenProducts ?? [];
   console.log('eatenProducts', eatenProducts);
   return (
-    <div>
-      <TableContainer component={Paper} sx={{ height: 300, width: 280 }}>
-        <Table aria-label="simple table">
-          <TableBody>
-            {eatenProducts.length > 0 &&
-              eatenProducts.map(({ title, kcal, weight, id } = {}) => (
-                <DiaryProductsListItem
-                  id={id}
-                  name={title}
-                  calories={kcal}
-                  grams={weight}
-                />
-              ))}
-          </TableBody>
-        </Table>
-      </TableContainer>
-      {/* <List>
-        {eatenProducts.length > 0 &&
-          eatenProducts.map(({ title, kcal, weight, id } = {}) => {
-            return (
+    <TableContainer
+      sx={{
+        height: { mobile: 250, tablet: 440 },
+        width: { mobile: 280, tablet: 610 },
+        overflowX: 'hidden',
+        marginBottom: '60px',
+      }}
+    >
+      <Table aria-label="simple table" sx={{ height: 'max-content' }}>
+        <TableBody>
+          {eatenProducts.length > 0 &&
+            eatenProducts.map(({ title, kcal, weight, id } = {}) => (
               <DiaryProductsListItem
                 key={id}
                 id={id}
                 name={title}
-                grams={weight}
                 calories={kcal}
+                grams={weight}
               />
-            );
-          })}
-      </List> */}
-    </div>
+            ))}
+        </TableBody>
+      </Table>
+    </TableContainer>
   );
 };

@@ -11,13 +11,16 @@ import {
 } from '@mui/material';
 import { useSelector } from 'react-redux';
 import { selectUserId } from 'redux/auth/authSelectors';
-import { useDailyRateMutation, useUserDailyRateMutation } from 'redux/diet/dietApi';
+import {
+  useDailyRateMutation,
+  useUserDailyRateMutation,
+} from 'redux/diet/dietApi';
 
 const CalculatorForm = ({ showModalHandler }) => {
   const [postDailyRate] = useDailyRateMutation({
     fixedCacheKey: 'dailyRate',
   });
-  // const [postUserDailyRate, resultUser] = useUserDailyRateMutation();
+  const [postUserDailyRate, resultUser] = useUserDailyRateMutation();
   const userId = useSelector(selectUserId);
   const handleFormSubmit = e => {
     e.preventDefault();
@@ -28,8 +31,8 @@ const CalculatorForm = ({ showModalHandler }) => {
     }
     // console.log(body);
     postDailyRate(body);
+    postUserDailyRate({ id: userId, body });
     showModalHandler();
-    // postUserDailyRate({ id: userId, body });
   };
   return (
     <Box

@@ -19,7 +19,7 @@ const Calendar = () => {
 
   return (
     <LocalizationProvider dateAdapter={AdapterDateFns}>
-      <Box>
+      <Box sx={{ marginBottom: '32px', padding: '0px 15px' }}>
         <DesktopDatePicker
           value={date}
           onChange={newDate => {
