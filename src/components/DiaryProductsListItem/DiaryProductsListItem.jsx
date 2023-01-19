@@ -1,6 +1,7 @@
 import { useSelector } from 'react-redux';
 import { selectCurrentDateId } from 'redux/date/dateSelector';
 import { useDeleteEatenProductMutation } from 'redux/diet/dietApi';
+import { TableRow, TableCell } from '@mui/material';
 import { Item, Icon } from './DiaryProductsListItem.styled';
 import CrossIcon from './images/close.svg';
 
@@ -12,19 +13,15 @@ export const DiaryProductsListItem = ({ id, name, grams, calories }) => {
   };
 
   return (
-    <Item>
-      <p className="products-item-name">{name}</p>
-      <p className="products-item-grams">{grams} g</p>
-      <p className="products-item-calories">
-        {calories} <span>kcal</span>
-      </p>
-      <Icon
-        src={CrossIcon}
-        alt="delete product"
-        onClick={() => {
-          handleDelete(id);
-        }}
-      />
-    </Item>
+    <TableRow
+      key={id}
+      sx={{ '&:last-child td, &:last-child th': { border: 0 } }}
+    >
+      <TableCell component="th" scope="row">
+        {name}
+      </TableCell>
+      <TableCell align="right">{calories}</TableCell>
+      <TableCell align="right">{grams}</TableCell>
+    </TableRow>
   );
 };

@@ -1,16 +1,34 @@
 import React from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch } from 'react-redux';
+import { Box, TextField } from '@mui/material';
+import { DatePicker, LocalizationProvider } from '@mui/x-date-pickers';
+import formatISO from 'date-fns/formatISO';
+import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
 import { updateCurrentDay } from 'redux/date/dateSlice';
+import { DesktopDatePicker, MobileDatePicker } from '@mui/x-date-pickers';
 
 const Calendar = () => {
+  const [date, setDate] = useState(new Date());
   const dispatch = useDispatch();
-  const handleChange = e => {
-    dispatch(updateCurrentDay(e.target.value));
-  };
+
+  useEffect(() => {
+    const formatDate = formatISO(date, { representation: 'date' });
+    dispatch(updateCurrentDay(formatDate));
+  }, [date, dispatch]);
+
   return (
-    <div>
-      <input type="date" onChange={handleChange} />
-    </div>
+    <LocalizationProvider dateAdapter={AdapterDateFns}>
+      <Box>
+        <DesktopDatePicker
+          value={date}
+          onChange={newDate => {
+            setDate(newDate);
+          }}
+          renderInput={params => <TextField {...params} />}
+        />
+      </Box>
+    </LocalizationProvider>
   );
 };
 

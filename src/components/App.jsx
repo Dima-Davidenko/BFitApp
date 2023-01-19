@@ -60,7 +60,7 @@ export const App = () => {
             path="diary"
             element={
               <PrivateRoute defaultRoute="/">
-                <DiaryProductsList />
+                <Diary />
               </PrivateRoute>
             }
           />

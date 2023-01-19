@@ -10,7 +10,7 @@ import {
   useSearchProductQuery,
 } from 'redux/diet/dietApi';
 
-const AddProductForm = () => {
+const AddProductForm = ({ isFormActive }) => {
   const dispatch = useDispatch();
   const currentDate = useSelector(selectCurrentDate);
 
@@ -34,15 +34,21 @@ const AddProductForm = () => {
   });
   const handleSubmit = e => {
     e.preventDefault();
-    console.log('prodId', prodId);
-    console.log(e.target.weight.value);
-    addProduct({ date: currentDate, productId: prodId.id, weight: e.target.weight.value });
+    addProduct({
+      date: currentDate,
+      productId: prodId.id,
+      weight: e.target.weight.value,
+    });
+    isFormActive(false);
   };
   const handleChangeQuery = ({ target }) => {
     setQuery(target.value);
   };
   const debouncedHandleChangeQuery = debounce(handleChangeQuery, 300);
-  const productList = productsInfo.map(product => ({ label: product.title.ru, id: product._id }));
+  const productList = productsInfo.map(product => ({
+    label: product.title.ru,
+    id: product._id,
+  }));
 
   return (
     <div>
@@ -51,7 +57,7 @@ const AddProductForm = () => {
           freeSolo
           id="combo-box-demo"
           options={productList}
-          sx={{ width: 300 }}
+          sx={{ width: 280 }}
           onInputChange={debouncedHandleChangeQuery}
           loading={isFetching}
           loadingText="Loading products..."
@@ -69,7 +75,12 @@ const AddProductForm = () => {
           )}
         />
         <br></br>
-        <TextField type="text" name="weight" />
+        <TextField
+          type="text"
+          name="weight"
+          label="Grams"
+          sx={{ width: 280 }}
+        />
         <Button type="submit">Add</Button>
       </form>
     </div>
