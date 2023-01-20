@@ -9,27 +9,17 @@ import {
   TextField,
   Typography,
 } from '@mui/material';
-import { useSelector } from 'react-redux';
-import { selectUserId } from 'redux/auth/authSelectors';
-import { useDailyRateMutation, useUserDailyRateMutation } from 'redux/diet/dietApi';
 
-const CalculatorForm = ({ showModalHandler }) => {
-  const [postDailyRate] = useDailyRateMutation({
-    fixedCacheKey: 'dailyRate',
-  });
-  // const [postUserDailyRate, resultUser] = useUserDailyRateMutation();
-  const userId = useSelector(selectUserId);
+const CalculatorForm = ({ onFormSubmit }) => {
   const handleFormSubmit = e => {
     e.preventDefault();
     const formData = new FormData(e.target);
-    const body = {};
+    const values = {};
     for (const [key, value] of formData.entries()) {
-      body[key] = value;
+      values[key] = +value;
     }
-    // console.log(body);
-    postDailyRate(body);
-    showModalHandler();
-    // postUserDailyRate({ id: userId, body });
+    e.target.reset();
+    onFormSubmit(values);
   };
   return (
     <Box

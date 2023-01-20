@@ -1,78 +1,122 @@
-import { Autocomplete, Button, TextField } from '@mui/material';
+import { Autocomplete, Button, Icon, TextField, useMediaQuery } from '@mui/material';
 import { debounce } from 'lodash';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { selectAccessToken } from 'redux/auth/authSelectors';
 import { selectCurrentDate } from 'redux/date/dateSelector';
-import { updateCurrentDay, updateCurrentDayId } from 'redux/date/dateSlice';
+import { updateCurrentDayId } from 'redux/date/dateSlice';
 import {
   useAddEatenProductMutation,
   useGetDayInfoQuery,
+  useGetUserInfoQuery,
   useSearchProductQuery,
 } from 'redux/diet/dietApi';
+import css from './AddProductForm.module.scss';
+import { StyledDiv } from './AddProductForm.styles';
+import AddIcon from '@mui/icons-material/Add';
+import { useTheme } from '@emotion/react';
 
-const AddProductForm = () => {
+const AddProductForm = ({ modalForm }) => {
   const dispatch = useDispatch();
   const currentDate = useSelector(selectCurrentDate);
+  const accessToken = useSelector(selectAccessToken);
+
+  const { data: userInfo } = useGetUserInfoQuery();
+  const userAge = userInfo?.userData?.age;
 
   const { data: dayInfo } = useGetDayInfoQuery(currentDate, {
-    skip: !currentDate,
+    skip: !currentDate || !accessToken || !userAge,
   });
 
   useEffect(() => {
-    dispatch(updateCurrentDay(new Date().toJSON().slice(0, 10)));
-  }, [dispatch]);
-
-  useEffect(() => {
-    if (dayInfo?.id) dispatch(updateCurrentDayId(dayInfo?.id));
+    dispatch(updateCurrentDayId(dayInfo?.id ?? ''));
   }, [dayInfo, dispatch]);
 
   const [query, setQuery] = useState('');
   const [prodId, setProdId] = useState('');
   const [addProduct] = useAddEatenProductMutation();
-  const { data: productsInfo = [], isFetching } = useSearchProductQuery(query, {
+  const {
+    data: productsInfo = [],
+    isFetching,
+    isError: searchProductError,
+  } = useSearchProductQuery(query, {
     skip: !query,
   });
+
   const handleSubmit = e => {
     e.preventDefault();
-    console.log('prodId', prodId);
-    console.log(e.target.weight.value);
-    addProduct({ date: currentDate, productId: prodId.id, weight: e.target.weight.value });
+    addProduct({ date: currentDate, productId: prodId, weight: e.target.weight.value });
   };
+
   const handleChangeQuery = ({ target }) => {
     setQuery(target.value);
   };
+
   const debouncedHandleChangeQuery = debounce(handleChangeQuery, 300);
-  const productList = productsInfo.map(product => ({ label: product.title.ru, id: product._id }));
 
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
+    <StyledDiv modalForm={modalForm}>
+      <form className={css.addForm} onSubmit={handleSubmit}>
         <Autocomplete
-          freeSolo
           id="combo-box-demo"
-          options={productList}
-          sx={{ width: 300 }}
+          options={productsInfo}
+          getOptionLabel={option => {
+            return option.title.ru;
+          }}
+          sx={{ width: { tablet: '350px' }, mr: { tablet: '20px' } }}
           onInputChange={debouncedHandleChangeQuery}
           loading={isFetching}
           loadingText="Loading products..."
           noOptionsText="No options..."
-          onChange={(e, value, details) => {
-            setProdId(value);
+          onChange={(e, value) => {
+            setQuery('');
+            setProdId(value?._id);
           }}
           renderInput={params => (
             <TextField
               {...params}
+              fullWidth
               value={query}
               onChange={debouncedHandleChangeQuery}
-              label="Product"
+              label="Enter product name"
+              sx={{ width: { mobile: '285px', tablet: '350px' } }}
             />
           )}
         />
-        <br></br>
-        <TextField type="text" name="weight" />
-        <Button type="submit">Add</Button>
+        <TextField
+          fullWidth
+          type="text"
+          name="weight"
+          label="Grams"
+          sx={{ width: { mobile: '285px', tablet: '106px' }, mb: { mobile: '60px', tablet: 0 } }}
+        />
+
+        <Button type="submit" sx={{ display: { mobile: 'block', tablet: 'none' } }}>
+          Add
+        </Button>
+
+        <Button
+          type="submit"
+          sx={{
+            display: {
+              mobile: 'none',
+              tablet: 'block',
+            },
+            ml: '80px',
+            minWidth: '0px',
+            width: '48px',
+            height: '48px',
+            lineHeight: '0px',
+            borderRadius: '100%',
+            padding: 0,
+          }}
+        >
+          <Icon>
+            <AddIcon />
+          </Icon>
+        </Button>
       </form>
-    </div>
+    </StyledDiv>
   );
 };
 

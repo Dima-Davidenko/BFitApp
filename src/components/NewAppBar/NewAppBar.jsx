@@ -32,12 +32,7 @@ const NewAppBar = () => {
       <header className={css.header}>
         <div onClick={() => navigate('/')} className={css.logoWrapper}>
           <img className={css.logoBaba} src={logoBaba} alt="logo" />
-          <StyledSlimMom
-            isLoggedIn={isLoggedIn}
-            className={css.slimMom}
-            src={slimMom}
-            alt="logo"
-          />
+          <StyledSlimMom isLoggedIn={isLoggedIn} className={css.slimMom} src={slimMom} alt="logo" />
         </div>
         {!isLoggedIn && <AuthMenu />}
         {isLoggedIn && <DiaryMenu />}
@@ -58,18 +53,16 @@ const NewAppBar = () => {
         )}
       </header>
       <StyledUserMenuContainer isLoggedIn={isLoggedIn} />
-      <StyledMobileMenu menuOpen={menuOpen}>
-        <StyledNavLink onClick={toggleModal} className={css.diary} to="/diary">
-          Diary
-        </StyledNavLink>
-        <StyledNavLink
-          onClick={toggleModal}
-          className={css.calc}
-          to="/calculator"
-        >
-          Calculator
-        </StyledNavLink>
-      </StyledMobileMenu>
+      {menuOpen && (
+        <StyledMobileMenu menuOpen={menuOpen}>
+          <StyledNavLink onClick={toggleModal} className={css.diary} to="/diary">
+            Diary
+          </StyledNavLink>
+          <StyledNavLink onClick={toggleModal} className={css.calc} to="/calculator">
+            Calculator
+          </StyledNavLink>
+        </StyledMobileMenu>
+      )}
     </div>
   );
 };

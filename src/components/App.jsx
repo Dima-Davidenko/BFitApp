@@ -1,6 +1,8 @@
+import { CircularProgress } from '@mui/material';
+import Login from 'components/Login/Login';
+import 'index.scss';
 import Calculator from 'pages/Calculator/Calculator';
 import Diary from 'pages/Diary/Diary';
-import Login from 'components/Login/Login';
 import MainPage from 'pages/MainPage/MainPage';
 import NotFound from 'pages/NotFound/NotFound';
 import { useEffect, useRef } from 'react';
@@ -9,18 +11,19 @@ import { Route, Routes } from 'react-router-dom';
 import { ToastContainer } from 'react-toastify';
 import 'react-toastify/dist/ReactToastify.css';
 import { refreshUser } from 'redux/auth/authOperations';
-import { selectIsLoggedIn, selectSid } from 'redux/auth/authSelectors';
+import { selectIsLoggedIn, selectIsRefreshing, selectSid } from 'redux/auth/authSelectors';
 import Registration from './Registration/Registration';
 import PrivateRoute from './Routes/PrivateRoute/PrivateRoute';
 import ProtectedRoute from './Routes/ProtectedRoute/ProtectedRoute';
 import SharedLayout from './SharedLayout/SharedLayout';
-import MainAppBar from './MainAppBar/MainAppBar';
-import { DiaryProductsList } from './DiaryProductsList/DiaryProductsList';
-import 'index.scss';
+
+const body = document.querySelector('body');
 
 export const App = () => {
   const dispatch = useDispatch();
   const isLoggedIn = useSelector(selectIsLoggedIn);
+  isLoggedIn ? body.classList.remove('loggedOut') : body.classList.add('loggedOut');
+  const isLoading = useSelector(selectIsRefreshing);
   let isRefreshing = useRef(false);
   const sid = useSelector(selectSid);
   useEffect(() => {
@@ -31,7 +34,7 @@ export const App = () => {
   }, [dispatch, isLoggedIn, sid]);
 
   return (
-    <div className={isLoggedIn ? 'container' : 'container loggedOut'}>
+    <div className="container">
       <Routes>
         <Route path="" element={<SharedLayout />}>
           <Route
@@ -53,7 +56,7 @@ export const App = () => {
           <Route
             path="registration"
             element={
-              <ProtectedRoute defaultRoute="/diary">
+              <ProtectedRoute defaultRoute="/calculator">
                 <Registration />
               </ProtectedRoute>
             }
@@ -62,7 +65,7 @@ export const App = () => {
             path="diary"
             element={
               <PrivateRoute defaultRoute="/">
-                <DiaryProductsList />
+                <Diary />
               </PrivateRoute>
             }
           />
@@ -89,6 +92,13 @@ export const App = () => {
         pauseOnHover
         theme="light"
       />
+      {isLoading && (
+        <div
+          style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}
+        >
+          <CircularProgress size={200} />
+        </div>
+      )}
     </div>
   );
 };

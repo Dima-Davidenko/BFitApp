@@ -18,9 +18,9 @@ import {
 } from './Modal.styled';
 import { useDailyRateMutation } from 'redux/diet/dietApi';
 
-export const Modal = ({ closeModalHandler }) => {
+export const Modal = ({ closeModalHandler, btnClickHandler }) => {
   const notRecommendedProducts = [];
-  const [_, result] = useDailyRateMutation({
+  const [, result] = useDailyRateMutation({
     fixedCacheKey: 'dailyRate',
   });
   const dailyCalories = result?.data?.dailyRate ?? 0;
@@ -43,7 +43,7 @@ export const Modal = ({ closeModalHandler }) => {
     }
   };
   const onBtnClickHandler = () => {
-    closeModalHandler();
+    btnClickHandler();
   };
 
   const onCrossClickHandler = () => {

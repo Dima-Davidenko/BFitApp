@@ -18,7 +18,7 @@ export const StyledUserMenuContainer = styled.div`
   }
 `;
 export const StyledMobileMenu = styled.div`
-  display: ${p => (p.menuOpen ? 'flex' : 'none')};
+  display: flex;
   padding-top: 50px;
   flex-direction: column;
   justify-content: flex-start;
@@ -47,6 +47,7 @@ export const StyledNavLink = styled(NavLink)`
   font-size: 14px;
   line-height: 14px;
   color: #9b9faa;
+  white-space: nowrap;
   &.active {
     color: #ffffff;
   }
