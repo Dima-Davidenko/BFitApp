@@ -15,12 +15,12 @@ export const DiaryProductsListItem = ({ id, name, grams, calories }) => {
   return (
     <Item>
       <p className="products-item-name">{name}</p>
-      <p className="products-item-grams">{grams} g</p>
-      <p className="products-item-calories">
-        {calories} <span>kcal</span>
+      <p className="products-item">{grams}g</p>
+      <p className="products-item">
+        {calories.toFixed(0)} <span>kcal</span>
       </p>
       <Icon
-        src={CrossIcon}
+        back={CrossIcon}
         alt="delete product"
         onClick={() => {
           handleDelete(id);

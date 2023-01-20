@@ -1,7 +1,5 @@
-import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { logOut } from 'redux/auth/authOperations';
-import { dietApi } from 'redux/diet/dietApi';
 import { selectIsRefreshing, selectUser } from 'redux/auth/authSelectors';
 import scss from './UserMenu.module.scss';
 

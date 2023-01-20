@@ -7,6 +7,7 @@ import { selectCurrentDate } from 'redux/date/dateSelector';
 import { useGetDayInfoQuery, useGetUserInfoQuery } from 'redux/diet/dietApi';
 import { DiaryProductsListItem } from '../DiaryProductsListItem/DiaryProductsListItem';
 import { List } from './DiaryProductsList.styled';
+import css from './DiaryProductsList.module.scss';
 
 export const DiaryProductsList = () => {
   const currentDate = useSelector(selectCurrentDate);
@@ -19,8 +20,6 @@ export const DiaryProductsList = () => {
   const eatenProducts = data?.eatenProducts ?? [];
   return (
     <div>
-      <Calendar />
-      <AddProductForm />
       <List>
         {eatenProducts.length > 0 &&
           eatenProducts.map(({ title, kcal, weight, id } = {}) => {
@@ -29,7 +28,6 @@ export const DiaryProductsList = () => {
             );
           })}
       </List>
-      <DaySummary />
     </div>
   );
 };

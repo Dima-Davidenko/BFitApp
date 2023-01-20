@@ -1,6 +1,8 @@
+import { CircularProgress } from '@mui/material';
+import Login from 'components/Login/Login';
+import 'index.scss';
 import Calculator from 'pages/Calculator/Calculator';
 import Diary from 'pages/Diary/Diary';
-import Login from 'components/Login/Login';
 import MainPage from 'pages/MainPage/MainPage';
 import NotFound from 'pages/NotFound/NotFound';
 import { useEffect, useRef } from 'react';
@@ -14,14 +16,13 @@ import Registration from './Registration/Registration';
 import PrivateRoute from './Routes/PrivateRoute/PrivateRoute';
 import ProtectedRoute from './Routes/ProtectedRoute/ProtectedRoute';
 import SharedLayout from './SharedLayout/SharedLayout';
-import MainAppBar from './MainAppBar/MainAppBar';
-import { DiaryProductsList } from './DiaryProductsList/DiaryProductsList';
-import 'index.scss';
-import { CircularProgress } from '@mui/material';
+
+const body = document.querySelector('body');
 
 export const App = () => {
   const dispatch = useDispatch();
   const isLoggedIn = useSelector(selectIsLoggedIn);
+  isLoggedIn ? body.classList.remove('loggedOut') : body.classList.add('loggedOut');
   const isLoading = useSelector(selectIsRefreshing);
   let isRefreshing = useRef(false);
   const sid = useSelector(selectSid);
@@ -33,7 +34,7 @@ export const App = () => {
   }, [dispatch, isLoggedIn, sid]);
 
   return (
-    <div className={isLoggedIn ? 'container' : 'container loggedOut'}>
+    <div className="container">
       <Routes>
         <Route path="" element={<SharedLayout />}>
           <Route

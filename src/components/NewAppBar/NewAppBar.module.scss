@@ -1,8 +1,14 @@
 .container {
-  position: relative;
+  position: absolute;
+  width: 100%;
+  top: 0;
+  left: 0;
 }
 .header {
   position: relative;
+  width: 100%;
+  max-width: 1400px;
+  margin: 0 auto;
   height: 80px;
   display: flex;
   justify-content: space-between;

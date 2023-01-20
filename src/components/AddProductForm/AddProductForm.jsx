@@ -1,4 +1,4 @@
-import { Autocomplete, Button, TextField } from '@mui/material';
+import { Autocomplete, Button, Icon, TextField, useMediaQuery } from '@mui/material';
 import { debounce } from 'lodash';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
@@ -11,8 +11,12 @@ import {
   useGetUserInfoQuery,
   useSearchProductQuery,
 } from 'redux/diet/dietApi';
+import css from './AddProductForm.module.scss';
+import { StyledDiv } from './AddProductForm.styles';
+import AddIcon from '@mui/icons-material/Add';
+import { useTheme } from '@emotion/react';
 
-const AddProductForm = () => {
+const AddProductForm = ({ modalForm }) => {
   const dispatch = useDispatch();
   const currentDate = useSelector(selectCurrentDate);
   const accessToken = useSelector(selectAccessToken);
@@ -39,10 +43,6 @@ const AddProductForm = () => {
     skip: !query,
   });
 
-  // if (searchProductError) {
-  //   dispatch(dietApi.util.updateQueryData('searchProduct', []));
-  // }
-
   const handleSubmit = e => {
     e.preventDefault();
     addProduct({ date: currentDate, productId: prodId, weight: e.target.weight.value });
@@ -55,16 +55,15 @@ const AddProductForm = () => {
   const debouncedHandleChangeQuery = debounce(handleChangeQuery, 300);
 
   return (
-    <div>
-      <form onSubmit={handleSubmit}>
+    <StyledDiv modalForm={modalForm}>
+      <form className={css.addForm} onSubmit={handleSubmit}>
         <Autocomplete
-          // freeSolo
           id="combo-box-demo"
           options={productsInfo}
           getOptionLabel={option => {
             return option.title.ru;
           }}
-          sx={{ width: 300 }}
+          sx={{ width: { tablet: '350px' }, mr: { tablet: '20px' } }}
           onInputChange={debouncedHandleChangeQuery}
           loading={isFetching}
           loadingText="Loading products..."
@@ -76,17 +75,48 @@ const AddProductForm = () => {
           renderInput={params => (
             <TextField
               {...params}
+              fullWidth
               value={query}
               onChange={debouncedHandleChangeQuery}
-              label="Product"
+              label="Enter product name"
+              sx={{ width: { mobile: '285px', tablet: '350px' } }}
             />
           )}
         />
-        <br></br>
-        <TextField type="text" name="weight" />
-        <Button type="submit">Add</Button>
+        <TextField
+          fullWidth
+          type="text"
+          name="weight"
+          label="Grams"
+          sx={{ width: { mobile: '285px', tablet: '106px' }, mb: { mobile: '60px', tablet: 0 } }}
+        />
+
+        <Button type="submit" sx={{ display: { mobile: 'block', tablet: 'none' } }}>
+          Add
+        </Button>
+
+        <Button
+          type="submit"
+          sx={{
+            display: {
+              mobile: 'none',
+              tablet: 'block',
+            },
+            ml: '80px',
+            minWidth: '0px',
+            width: '48px',
+            height: '48px',
+            lineHeight: '0px',
+            borderRadius: '100%',
+            padding: 0,
+          }}
+        >
+          <Icon>
+            <AddIcon />
+          </Icon>
+        </Button>
       </form>
-    </div>
+    </StyledDiv>
   );
 };
 

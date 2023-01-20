@@ -12,34 +12,36 @@ const MainPage = () => {
   const navigate = useNavigate();
   const [modal, setModal] = useState(false);
   const openModal = () => setModal(true);
-  const onCloseModal = () => navigate('/registration');
+  const onCloseModal = () => setModal(false);
+  const onBtnClick = () => navigate('/registration');
   const handleCalculatorFormSubmit = values => {
     postDailyRate(values);
     openModal();
   };
   return (
-    <Container
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: 'start',
-        justifyContent: 'center',
-        height: '100vh',
-        padding: {
-          mobile: 2.5,
-          tablet: 4,
-          laptop: 1,
-        },
-        width: {
-          mobile: 320,
-          tablet: 768,
-          laptop: 1280,
-        },
-      }}
+    <div
+      className="mainPageWrapper"
+      // sx={{
+      //   display: 'flex',
+      //   flexDirection: 'column',
+      //   maxWidth: '1280px',
+      //   alignItems: 'start',
+      //   justifyContent: 'center',
+      //   padding: {
+      //     mobile: 2.5,
+      //     tablet: 4,
+      //     laptop: 1,
+      //   },
+      //   width: {
+      //     mobile: 320,
+      //     tablet: 768,
+      //     laptop: 1280,
+      //   },
+      // }}
     >
       <CalculatorForm onFormSubmit={handleCalculatorFormSubmit} />
-      {modal && <Modal closeModalHandler={onCloseModal} />}
-    </Container>
+      {modal && <Modal closeModalHandler={onCloseModal} btnClickHandler={onBtnClick} />}
+    </div>
   );
 };
 

@@ -1,71 +1,55 @@
 import styled from '@emotion/styled';
 
 export const Item = styled.li`
-  display: flex;
-  justify-content: space-between;
+  display: grid;
+  /* justify-content: space-between; */
+  grid-template-columns: 4fr 1fr 1fr 0.4fr;
+  gap: 10px;
+  font-family: 'Verdana';
+  font-style: normal;
+  font-weight: 400;
   font-size: 14px;
+  line-height: 17px;
+  letter-spacing: 0.04em;
   color: #212121;
-  @media (min-width: 426px) and (max-width: 1023px) {
-    padding-right: 40px;
+  padding: 20px 20px 0;
+  @media (min-width: 426px) {
+    padding: 20px 32px 0;
+    gap: 20px;
   }
-  @media (min-width: 1024px) {
-    padding-right: 40px;
+  @media (min-width: 768px) {
+    justify-content: start;
   }
+
   & .products-item-name {
-    text-align: left;
-    font-family: 'VerdanaRegular, sans-serif';
-    width: 130px;
+    display: block;
+    width: 100%;
     border-bottom: 1px solid #e0e0e0;
-    padding: 8px 0;
-    @media (min-width: 426px) and (max-width: 1023px) {
-      width: 240px;
-      padding: 20px 0;
-    }
-    @media (min-width: 1024px) {
-      width: 240px;
-      padding: 20px 0;
-    }
+    padding-bottom: 8px;
+    /* @media (min-width: 768px) {
+      width: 350px;
+      margin-right: 20px;
+    } */
   }
-  & .products-item-grams {
+  & .products-item {
+    display: block;
     text-align: right;
-    font-family: 'VerdanaRegular, sans-serif';
-    width: 49px;
+    width: 100%;
     border-bottom: 1px solid #e0e0e0;
-    margin: 0 8px;
-    padding: 8px 0;
-    @media (min-width: 426px) and (max-width: 1023px) {
+    padding: 8px 5px;
+    white-space: nowrap;
+    @media (min-width: 768px) {
       width: 107px;
-      padding: 20px 0;
-    }
-    @media (min-width: 1024px) {
-      width: 107px;
-      padding: 20px 0;
-    }
-  }
-  & .products-item-calories {
-    text-align: right;
-    font-family: 'VerdanaRegular, sans-serif';
-    width: 58px;
-    border-bottom: 1px solid #e0e0e0;
-    padding: 8px 0;
-    @media (min-width: 426px) and (max-width: 1023px) {
-      width: 107px;
-      padding: 20px 0;
-    }
-    @media (min-width: 1024px) {
-      width: 107px;
-      padding: 20px 0;
     }
     & span {
-      font-size: 10px;
+      font-size: 5px;
     }
   }
 `;
 
-export const Icon = styled.img`
+export const Icon = styled.div`
   cursor: pointer;
-  margin-left: 15px;
-  @media (min-width: 426px) {
-    margin-left: 30px;
-  }
+  background-image: url(${p => p.back});
+  background-position: center;
+  background-repeat: no-repeat;
 `;

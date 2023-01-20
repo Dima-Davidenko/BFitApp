@@ -29,6 +29,7 @@ const handleUserLogin = (state, { payload: { sid, refreshToken, user, accessToke
 
 const handleAuthReject = (state, { payload }) => {
   state.error = payload;
+  state.isRefreshing = false;
 };
 const handlePendingRequest = state => {
   state.isRefreshing = true;

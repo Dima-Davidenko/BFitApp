@@ -16,7 +16,7 @@ const CalculatorForm = ({ onFormSubmit }) => {
     const formData = new FormData(e.target);
     const values = {};
     for (const [key, value] of formData.entries()) {
-      values[key] = value;
+      values[key] = +value;
     }
     e.target.reset();
     onFormSubmit(values);
