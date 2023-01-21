@@ -1,4 +1,4 @@
-import { useEffect } from 'react';
+import { useCallback, useEffect } from 'react';
 
 import BackArrow from './backArrowModal.png';
 import CloseBtn from './closeModalBtn.svg';
@@ -24,18 +24,21 @@ export const Modal = ({ closeModalHandler, btnClickHandler }) => {
     fixedCacheKey: 'dailyRate',
   });
   const dailyCalories = result?.data?.dailyRate ?? 0;
-  const escKeyHandler = e => {
-    if (e.keyCode === 27) {
-      closeModalHandler();
-    }
-  };
+  const memoEscKeyHanler = useCallback(
+    e => {
+      if (e.keyCode === 27) {
+        closeModalHandler();
+      }
+    },
+    [closeModalHandler]
+  );
 
   useEffect(() => {
-    window.addEventListener('keydown', escKeyHandler);
+    window.addEventListener('keydown', memoEscKeyHanler);
     return () => {
-      window.removeEventListener('keydown', escKeyHandler);
+      window.removeEventListener('keydown', memoEscKeyHanler);
     };
-  }, []);
+  }, [memoEscKeyHanler]);
 
   const onClickOvrlHandler = e => {
     if (e.target.id === 'modal-overlay') {
