@@ -7,7 +7,7 @@ import { Box, Button, TextField, Typography } from '@mui/material';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 
-import { NavLink } from 'react-router-dom';
+import { NavLink, useNavigate } from 'react-router-dom';
 import styled from '@emotion/styled';
 import { selectIsRefreshing } from 'redux/auth/authSelectors';
 
@@ -38,13 +38,13 @@ const StyledLink = styled(NavLink)`
 `;
 
 const initialValues = {
-  username: '',
+  name: '',
   email: '',
   password: '',
 };
 
 const schema = yup.object().shape({
-  username: yup
+  name: yup
     .string()
     .matches(/^[a-zа-яA-ZА-Яіє'ї ]+$/, 'Should include only symbols')
     .min(3, 'Should exceed 3 letters')
@@ -61,23 +61,16 @@ const schema = yup.object().shape({
 const Registration = () => {
   const dispatch = useDispatch();
   const isRefreshing = useSelector(selectIsRefreshing);
-
+  const navigate = useNavigate();
   const formik = useFormik({
     initialValues,
     validationSchema: schema,
-    onSubmit: (values, { setSubmitting, resetForm }) => {
-      dispatch(register(values));
+    onSubmit: ({ name, email, password }, { setSubmitting, resetForm }) => {
+      dispatch(register({ username: name, email, password }));
       setSubmitting(false);
     },
     validateOnBlur: true,
   });
-  // const handleSubmit = evt => {
-  //   evt.preventDefault();
-  //   const username = evt.target.elements.username.value;
-  //   const email = evt.target.elements.email.value;
-  //   const password = evt.target.elements.password.value;
-  //   dispatch(register({ username, email, password }));
-  // };
   return (
     <Box
       sx={{
@@ -120,15 +113,12 @@ const Registration = () => {
         onSubmit={formik.handleSubmit}
       >
         <TextField
-          name="username"
+          name="name"
           label="Name "
-          value={formik.values.username}
+          value={formik.values.name}
           onChange={formik.handleChange}
-          error={formik.touched.username && Boolean(formik.errors.username)}
-          helperText={
-            (formik.touched.username && formik.errors.username) || ' '
-          }
-          required
+          error={formik.touched.name && Boolean(formik.errors.name)}
+          helperText={(formik.touched.name && formik.errors.name) || ' '}
           sx={{
             width: 240,
             marginBottom: '20px',
@@ -141,7 +131,6 @@ const Registration = () => {
           onChange={formik.handleChange}
           error={formik.touched.email && Boolean(formik.errors.email)}
           helperText={(formik.touched.email && formik.errors.email) || ' '}
-          required
           sx={{
             width: 240,
             marginBottom: '20px',
@@ -154,9 +143,7 @@ const Registration = () => {
           value={formik.values.password}
           onChange={formik.handleChange}
           error={formik.touched.password && Boolean(formik.errors.password)}
-          helperText={
-            (formik.touched.password && formik.errors.password) || ' '
-          }
+          helperText={(formik.touched.password && formik.errors.password) || ' '}
           required
           sx={{
             width: 240,
@@ -190,12 +177,7 @@ const Registration = () => {
             },
           }}
         >
-          <Button
-            type="submit"
-            variant="contained"
-            style={styleBtn}
-            disabled={isRefreshing}
-          >
+          <Button type="submit" variant="contained" style={styleBtn} disabled={isRefreshing}>
             Register
           </Button>
           <StyledLink to="/login">Log in</StyledLink>
@@ -206,43 +188,3 @@ const Registration = () => {
 };
 
 export default Registration;
-
-// import React from 'react';
-// import { useDispatch } from 'react-redux';
-// import { register } from 'redux/auth/authOperations';
-
-// const Registration = () => {
-//   const dispatch = useDispatch();
-//   const handleSubmit = evt => {
-//     evt.preventDefault();
-//     const username = evt.target.elements.username.value;
-//     const email = evt.target.elements.email.value;
-//     const password = evt.target.elements.password.value;
-//     dispatch(register({ username, email, password }));
-//   };
-//   return (
-//     <div>
-//       <form onSubmit={handleSubmit}>
-//         <div>
-//           <label>
-//             username <input name="username" type="text"></input>
-//           </label>
-//         </div>
-//         <div>
-//           <label>
-//             {' '}
-//             email <input name="email" type="text"></input>
-//           </label>
-//         </div>
-//         <div>
-//           <label>
-//             password <input name="password" type="text"></input>
-//           </label>
-//         </div>
-//         <button type="submit">Register</button>
-//       </form>
-//     </div>
-//   );
-// };
-
-// export default Registration;

@@ -117,7 +117,6 @@ const Login = () => {
           onChange={formik.handleChange}
           error={formik.touched.email && Boolean(formik.errors.email)}
           helperText={(formik.touched.email && formik.errors.email) || ' '}
-          required
           sx={{
             width: 240,
             marginBottom: '20px',
@@ -130,9 +129,7 @@ const Login = () => {
           value={formik.values.password}
           onChange={formik.handleChange}
           error={formik.touched.password && Boolean(formik.errors.password)}
-          helperText={
-            (formik.touched.password && formik.errors.password) || ' '
-          }
+          helperText={(formik.touched.password && formik.errors.password) || ' '}
           required
           sx={{
             width: 240,
@@ -166,12 +163,7 @@ const Login = () => {
             },
           }}
         >
-          <Button
-            type="submit"
-            variant="contained"
-            style={styleBtn}
-            disabled={isRefreshing}
-          >
+          <Button type="submit" variant="contained" style={styleBtn} disabled={isRefreshing}>
             Log in
           </Button>
           <StyledLink to="/registration">Register</StyledLink>
@@ -182,35 +174,3 @@ const Login = () => {
 };
 
 export default Login;
-
-// import { useDispatch } from 'react-redux';
-// import { logIn } from 'redux/auth/authOperations';
-
-// const Login = () => {
-//   const dispatch = useDispatch();
-//   const handleSubmit = evt => {
-//     evt.preventDefault();
-//     const email = evt.target.elements.email.value;
-//     const password = evt.target.elements.password.value;
-//     dispatch(logIn({ email, password }));
-//   };
-//   return (
-//     <div>
-//       <form onSubmit={handleSubmit}>
-//         <div>
-//           <label>
-//             email <input name="email" type="text"></input>
-//           </label>
-//         </div>
-//         <div>
-//           <label>
-//             password <input name="password" type="text"></input>
-//           </label>
-//         </div>
-//         <button type="submit">Login</button>
-//       </form>
-//     </div>
-//   );
-// };
-
-// export default Login;
