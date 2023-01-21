@@ -2,6 +2,9 @@ import { useDispatch, useSelector } from 'react-redux';
 import { logIn } from 'redux/auth/authOperations';
 import { Box, Button, TextField, Typography } from '@mui/material';
 
+import { useFormik } from 'formik';
+import * as yup from 'yup';
+
 import { NavLink } from 'react-router-dom';
 import styled from '@emotion/styled';
 import { selectIsRefreshing } from 'redux/auth/authSelectors';
@@ -32,15 +35,40 @@ const StyledLink = styled(NavLink)`
   }
 `;
 
+const initialValues = {
+  username: '',
+  email: '',
+  password: '',
+};
+
+const schema = yup.object().shape({
+  email: yup.string().email('Uncorrect format').required('Email is required'),
+  password: yup
+    .string()
+    .min(8, 'Should be more then 8 symbols')
+    .max(20, 'Too many symbols')
+    .required('Password is required'),
+});
+
 const Login = () => {
   const dispatch = useDispatch();
   const isRefreshing = useSelector(selectIsRefreshing);
-  const handleSubmit = evt => {
-    evt.preventDefault();
-    const email = evt.target.elements.email.value;
-    const password = evt.target.elements.password.value;
-    dispatch(logIn({ email, password }));
-  };
+  // const handleSubmit = evt => {
+  //   evt.preventDefault();
+  //   const email = evt.target.elements.email.value;
+  //   const password = evt.target.elements.password.value;
+  //   dispatch(logIn({ email, password }));
+  // };
+
+  const formik = useFormik({
+    initialValues,
+    validationSchema: schema,
+    onSubmit: (values, { setSubmitting, resetForm }) => {
+      dispatch(logIn(values));
+      setSubmitting(false);
+    },
+    validateOnBlur: true,
+  });
   return (
     <Box
       sx={{
@@ -80,21 +108,31 @@ const Login = () => {
           alignItems: 'start',
           width: '240px',
         }}
-        onSubmit={handleSubmit}
+        onSubmit={formik.handleSubmit}
       >
         <TextField
           name="email"
           label="Email "
+          value={formik.values.email}
+          onChange={formik.handleChange}
+          error={formik.touched.email && Boolean(formik.errors.email)}
+          helperText={(formik.touched.email && formik.errors.email) || ' '}
           required
           sx={{
             width: 240,
-            marginBottom: '40px',
+            marginBottom: '20px',
           }}
         />
         <TextField
           name="password"
           label="Password "
           type="password"
+          value={formik.values.password}
+          onChange={formik.handleChange}
+          error={formik.touched.password && Boolean(formik.errors.password)}
+          helperText={
+            (formik.touched.password && formik.errors.password) || ' '
+          }
           required
           sx={{
             width: 240,
@@ -128,7 +166,12 @@ const Login = () => {
             },
           }}
         >
-          <Button type="submit" variant="contained" style={styleBtn} disabled={isRefreshing}>
+          <Button
+            type="submit"
+            variant="contained"
+            style={styleBtn}
+            disabled={isRefreshing}
+          >
             Log in
           </Button>
           <StyledLink to="/registration">Register</StyledLink>
