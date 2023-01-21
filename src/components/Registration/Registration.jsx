@@ -144,7 +144,6 @@ const Registration = () => {
           onChange={formik.handleChange}
           error={formik.touched.password && Boolean(formik.errors.password)}
           helperText={(formik.touched.password && formik.errors.password) || ' '}
-          required
           sx={{
             width: 240,
             marginBottom: '60px',

@@ -36,7 +36,6 @@ const StyledLink = styled(NavLink)`
 `;
 
 const initialValues = {
-  username: '',
   email: '',
   password: '',
 };
@@ -53,12 +52,6 @@ const schema = yup.object().shape({
 const Login = () => {
   const dispatch = useDispatch();
   const isRefreshing = useSelector(selectIsRefreshing);
-  // const handleSubmit = evt => {
-  //   evt.preventDefault();
-  //   const email = evt.target.elements.email.value;
-  //   const password = evt.target.elements.password.value;
-  //   dispatch(logIn({ email, password }));
-  // };
 
   const formik = useFormik({
     initialValues,
@@ -130,7 +123,6 @@ const Login = () => {
           onChange={formik.handleChange}
           error={formik.touched.password && Boolean(formik.errors.password)}
           helperText={(formik.touched.password && formik.errors.password) || ' '}
-          required
           sx={{
             width: 240,
             marginBottom: '60px',
