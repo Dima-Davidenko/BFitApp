@@ -18,10 +18,9 @@ const SharedLayout = () => {
         </div>
       ) : (
         <>
-          {!isLoggedIn && <BackgroundContainer />}
-
           <NewAppBar />
           <Outlet />
+          {!isLoggedIn && <BackgroundContainer />}
         </>
       )}
     </>

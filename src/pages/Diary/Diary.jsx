@@ -4,9 +4,10 @@ import AddProductForm from 'components/AddProductForm/AddProductForm';
 import Calendar from 'components/Calendar/Calendar';
 import DaySummary from 'components/DaySummary/DaySummary';
 import { DiaryProductsList } from 'components/DiaryProductsList/DiaryProductsList';
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useSelector } from 'react-redux';
 import { useNavigate } from 'react-router-dom';
+import { toast } from 'react-toastify';
 import { selectAccessToken } from 'redux/auth/authSelectors';
 import { selectCurrentDate } from 'redux/date/dateSelector';
 import {
@@ -18,19 +19,28 @@ import BackBtn from '../../assets/backArrowModal.png';
 import css from './Diary.module.scss';
 import { StyledBackBtn, StyledFormMenuWrapper, SWrapper } from './Diary.styles';
 const body = document.querySelector('body');
+let toastId;
 
 const Diary = () => {
   const navigate = useNavigate();
   const [formMenu, setFormMenu] = useState(false);
   const currentDate = useSelector(selectCurrentDate);
   const accessToken = useSelector(selectAccessToken);
-  const { data: userInfo, isLoading, isFetching } = useGetUserInfoQuery();
+  const { data: userInfo, isLoading, isSuccess, isFetching } = useGetUserInfoQuery();
   const userAge = userInfo?.userData?.age;
-  const { isFetching: dayInfoLoading } = useGetDayInfoQuery(currentDate, {
+  const {
+    isLoading: dayInfoLoading,
+    isFetching: dayInfoFetching,
+    isSuccess: dayInfoSuccess,
+    isError: dayInfoError,
+  } = useGetDayInfoQuery(currentDate, {
     skip: !currentDate || !accessToken || !userAge,
   });
 
-  const [, { isLoading: mutationLoading }] = useUserDailyRateMutation({
+  const [
+    ,
+    { isLoading: mutationLoading, isFetching: mutationFetching, isSuccess: mutationSuccess },
+  ] = useUserDailyRateMutation({
     fixedCacheKey: 'daily-rate',
   });
 
@@ -93,13 +103,6 @@ const Diary = () => {
             </StyledFormMenuWrapper>
           )}
         </>
-      )}
-      {(isLoading || isFetching || mutationLoading || dayInfoLoading) && (
-        <div
-          style={{ position: 'fixed', top: '50%', left: '50%', transform: 'translate(-50%, -50%)' }}
-        >
-          <CircularProgress size={200} />
-        </div>
       )}
     </div>
   );

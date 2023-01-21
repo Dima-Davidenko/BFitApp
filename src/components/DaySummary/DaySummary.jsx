@@ -20,13 +20,7 @@ const DaySummary = () => {
   const { data: dayInfo } = useGetDayInfoQuery(currentDate, {
     skip: !currentDate || !accessToken || !userAge,
   });
-  const [, resulDailyRate] = useUserDailyRateMutation();
-  const notRecommended = resulDailyRate?.notAllowedProducts ?? [
-    'Flour products',
-    'Milk',
-    'Read meat',
-    'Smoked meats',
-  ];
+  const notRecommended = userInfo?.userData?.notAllowedProducts ?? [];
   const daySummary = dayInfo?.daySummary;
   const dailyRate = daySummary?.dailyRate ?? 0;
   const kcalConsumed = daySummary?.kcalConsumed ?? 0;

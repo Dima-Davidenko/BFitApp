@@ -15,7 +15,22 @@ import css from './AddProductForm.module.scss';
 import { StyledDiv } from './AddProductForm.styles';
 import AddIcon from '@mui/icons-material/Add';
 import { useTheme } from '@emotion/react';
+import { toast, ToastContainer } from 'react-toastify';
+import * as yup from 'yup';
+import { useFormik } from 'formik';
 
+let toastId;
+const initialValues = {
+  weight: '',
+};
+const schema = yup.object().shape({
+  weight: yup
+    .number('Wrong format')
+    .positive('Wrong format')
+    .integer('Wrong format')
+    .max(3000, 'Too big weight (>3000g)')
+    .required('Input product weight'),
+});
 const AddProductForm = ({ modalForm }) => {
   const dispatch = useDispatch();
   const currentDate = useSelector(selectCurrentDate);
@@ -34,7 +49,9 @@ const AddProductForm = ({ modalForm }) => {
 
   const [query, setQuery] = useState('');
   const [prodId, setProdId] = useState('');
-  const [addProduct] = useAddEatenProductMutation();
+  const [autocompleteValue, setAutocompleteValue] = useState(null);
+  const [addProduct, { isLoading, isSuccess, isError }] = useAddEatenProductMutation();
+
   const {
     data: productsInfo = [],
     isFetching,
@@ -43,40 +60,69 @@ const AddProductForm = ({ modalForm }) => {
     skip: !query,
   });
 
-  const handleSubmit = e => {
-    e.preventDefault();
-    addProduct({ date: currentDate, productId: prodId, weight: e.target.weight.value });
-  };
+  useEffect(() => {
+    if (isLoading) toastId = toast.loading('Add new product...');
+  }, [isLoading]);
+  if (isSuccess && toastId) {
+    toast.update(toastId, {
+      render: 'New product has been added.',
+      type: 'success',
+      isLoading: false,
+      autoClose: 3000,
+    });
+    toastId = null;
+  }
+
+  if (isError && toastId) {
+    toast.update(toastId, {
+      render: 'An error ocured, try again.',
+      type: 'error',
+      isLoading: false,
+      autoClose: 3000,
+    });
+    toastId = null;
+  }
 
   const handleChangeQuery = ({ target }) => {
     setQuery(target.value);
   };
 
-  const debouncedHandleChangeQuery = debounce(handleChangeQuery, 300);
+  const formik = useFormik({
+    initialValues,
+    validationSchema: schema,
+    onSubmit: (values, { setSubmitting, resetForm }) => {
+      addProduct({ date: currentDate, productId: prodId, weight: values.weight });
+      setAutocompleteValue(null);
+      setSubmitting(false);
+      resetForm();
+    },
+    validateOnBlur: true,
+  });
 
+  const debouncedHandleChangeQuery = debounce(handleChangeQuery, 300);
   return (
     <StyledDiv modalForm={modalForm}>
-      <form className={css.addForm} onSubmit={handleSubmit}>
+      <form className={css.addForm} onSubmit={formik.handleSubmit}>
         <Autocomplete
           id="combo-box-demo"
+          value={autocompleteValue}
           options={productsInfo}
           getOptionLabel={option => {
             return option.title.ru;
           }}
           sx={{ width: { tablet: '350px' }, mr: { tablet: '20px' } }}
-          onInputChange={debouncedHandleChangeQuery}
           loading={isFetching}
           loadingText="Loading products..."
           noOptionsText="No options..."
           onChange={(e, value) => {
-            setQuery('');
             setProdId(value?._id);
+            setAutocompleteValue(value);
           }}
           renderInput={params => (
             <TextField
               {...params}
               fullWidth
-              value={query}
+              value={query || ''}
               onChange={debouncedHandleChangeQuery}
               label="Enter product name"
               sx={{ width: { mobile: '285px', tablet: '350px' } }}
@@ -85,9 +131,17 @@ const AddProductForm = ({ modalForm }) => {
         />
         <TextField
           fullWidth
-          type="text"
+          type="number"
           name="weight"
+          id="weight"
           label="Grams"
+          value={formik.values.weight}
+          onChange={formik.handleChange}
+          error={formik.touched.weight && Boolean(formik.errors.weight)}
+          helperText={(formik.touched.weight && formik.errors.weight) || ' '}
+          FormHelperTextProps={{
+            sx: { width: '300px', position: 'absolute', left: 0, bottom: -22 },
+          }}
           sx={{ width: { mobile: '285px', tablet: '106px' }, mb: { mobile: '60px', tablet: 0 } }}
         />
 
