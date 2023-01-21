@@ -1,7 +1,7 @@
 import { Box } from '@mui/material';
 import { DesktopDatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
-import { format, formatISO, parseISO } from 'date-fns';
+import { format, parseISO } from 'date-fns';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectCurrentDate } from 'redux/date/dateSelector';
@@ -10,7 +10,7 @@ import css from './Calendar.module.scss';
 
 const Calendar = () => {
   const [date, setDate] = useState(new Date());
-  const [error, setError] = useState('');
+  // const [, setError] = useState('');
 
   const dispatch = useDispatch();
   const currentDate = useSelector(selectCurrentDate);
@@ -23,15 +23,15 @@ const Calendar = () => {
     }
   }, [currentDate, dispatch]);
 
-  useEffect(() => {
-    try {
-      const formatDate = formatISO(date, { representation: 'date' });
-      dispatch(updateCurrentDay(formatDate));
-      setError('');
-    } catch (error) {
-      setError('Incorrect date');
-    }
-  }, [date, dispatch]);
+  // useEffect(() => {
+  //   try {
+  //     const formatDate = formatISO(date, { representation: 'date' });
+  //     dispatch(updateCurrentDay(formatDate));
+  //     setError('');
+  //   } catch (error) {
+  //     setError('Incorrect date');
+  //   }
+  // }, [date, dispatch]);
 
   return (
     <div>
