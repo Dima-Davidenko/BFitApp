@@ -1,9 +1,8 @@
-import React, { useState } from 'react';
 import CalculatorForm from 'components/CalculatorForm/CalculatorForm';
-import Container from '@mui/material/Container';
 import { Modal } from 'components/Modal';
-import { useDailyRateMutation } from 'redux/diet/dietApi';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import { useDailyRateMutation } from 'redux/diet/dietApi';
 
 const MainPage = () => {
   const [postDailyRate] = useDailyRateMutation({
@@ -19,26 +18,7 @@ const MainPage = () => {
     openModal();
   };
   return (
-    <div
-      className="mainPageWrapper"
-      // sx={{
-      //   display: 'flex',
-      //   flexDirection: 'column',
-      //   maxWidth: '1280px',
-      //   alignItems: 'start',
-      //   justifyContent: 'center',
-      //   padding: {
-      //     mobile: 2.5,
-      //     tablet: 4,
-      //     laptop: 1,
-      //   },
-      //   width: {
-      //     mobile: 320,
-      //     tablet: 768,
-      //     laptop: 1280,
-      //   },
-      // }}
-    >
+    <div className="mainPageWrapper">
       <CalculatorForm onFormSubmit={handleCalculatorFormSubmit} />
       {modal && <Modal closeModalHandler={onCloseModal} btnClickHandler={onBtnClick} />}
     </div>

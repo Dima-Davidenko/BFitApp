@@ -1,7 +1,7 @@
 import { useSelector } from 'react-redux';
 import { selectCurrentDate, selectCurrentDateId } from 'redux/date/dateSelector';
 import { useDeleteEatenProductMutation } from 'redux/diet/dietApi';
-import { Item, Icon } from './DiaryProductsListItem.styled';
+import { Icon, Item } from './DiaryProductsListItem.styled';
 import CrossIcon from './images/close.svg';
 
 export const DiaryProductsListItem = ({ id, name, grams, calories }) => {

@@ -1,13 +1,9 @@
-import AddProductForm from 'components/AddProductForm/AddProductForm';
-import Calendar from 'components/Calendar/Calendar';
-import DaySummary from 'components/DaySummary/DaySummary';
 import { useSelector } from 'react-redux';
 import { selectAccessToken } from 'redux/auth/authSelectors';
 import { selectCurrentDate } from 'redux/date/dateSelector';
 import { useGetDayInfoQuery, useGetUserInfoQuery } from 'redux/diet/dietApi';
 import { DiaryProductsListItem } from '../DiaryProductsListItem/DiaryProductsListItem';
 import { List } from './DiaryProductsList.styled';
-import css from './DiaryProductsList.module.scss';
 
 export const DiaryProductsList = () => {
   const currentDate = useSelector(selectCurrentDate);

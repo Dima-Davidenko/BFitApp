@@ -152,7 +152,7 @@ body.modalOpen {
   left: 0;
   right: 0;
   bottom: 0;
-
+  z-index: -1;
   background-repeat: no-repeat;
   background-position: bottom right;
   @media (min-width: 768px) {

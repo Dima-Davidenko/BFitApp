@@ -1,12 +1,12 @@
+import { Box, Button, TextField, Typography } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { logIn } from 'redux/auth/authOperations';
-import { Box, Button, TextField, Typography } from '@mui/material';
 
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 
-import { NavLink } from 'react-router-dom';
 import styled from '@emotion/styled';
+import { NavLink } from 'react-router-dom';
 import { selectIsRefreshing } from 'redux/auth/authSelectors';
 
 const styleBtn = {
@@ -36,7 +36,6 @@ const StyledLink = styled(NavLink)`
 `;
 
 const initialValues = {
-  username: '',
   email: '',
   password: '',
 };
@@ -53,12 +52,6 @@ const schema = yup.object().shape({
 const Login = () => {
   const dispatch = useDispatch();
   const isRefreshing = useSelector(selectIsRefreshing);
-  // const handleSubmit = evt => {
-  //   evt.preventDefault();
-  //   const email = evt.target.elements.email.value;
-  //   const password = evt.target.elements.password.value;
-  //   dispatch(logIn({ email, password }));
-  // };
 
   const formik = useFormik({
     initialValues,
@@ -117,7 +110,6 @@ const Login = () => {
           onChange={formik.handleChange}
           error={formik.touched.email && Boolean(formik.errors.email)}
           helperText={(formik.touched.email && formik.errors.email) || ' '}
-          required
           sx={{
             width: 240,
             marginBottom: '20px',
@@ -130,10 +122,7 @@ const Login = () => {
           value={formik.values.password}
           onChange={formik.handleChange}
           error={formik.touched.password && Boolean(formik.errors.password)}
-          helperText={
-            (formik.touched.password && formik.errors.password) || ' '
-          }
-          required
+          helperText={(formik.touched.password && formik.errors.password) || ' '}
           sx={{
             width: 240,
             marginBottom: '60px',
@@ -166,12 +155,7 @@ const Login = () => {
             },
           }}
         >
-          <Button
-            type="submit"
-            variant="contained"
-            style={styleBtn}
-            disabled={isRefreshing}
-          >
+          <Button type="submit" variant="contained" style={styleBtn} disabled={isRefreshing}>
             Log in
           </Button>
           <StyledLink to="/registration">Register</StyledLink>
@@ -182,35 +166,3 @@ const Login = () => {
 };
 
 export default Login;
-
-// import { useDispatch } from 'react-redux';
-// import { logIn } from 'redux/auth/authOperations';
-
-// const Login = () => {
-//   const dispatch = useDispatch();
-//   const handleSubmit = evt => {
-//     evt.preventDefault();
-//     const email = evt.target.elements.email.value;
-//     const password = evt.target.elements.password.value;
-//     dispatch(logIn({ email, password }));
-//   };
-//   return (
-//     <div>
-//       <form onSubmit={handleSubmit}>
-//         <div>
-//           <label>
-//             email <input name="email" type="text"></input>
-//           </label>
-//         </div>
-//         <div>
-//           <label>
-//             password <input name="password" type="text"></input>
-//           </label>
-//         </div>
-//         <button type="submit">Login</button>
-//       </form>
-//     </div>
-//   );
-// };
-
-// export default Login;

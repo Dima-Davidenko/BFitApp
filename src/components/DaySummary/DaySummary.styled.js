@@ -43,6 +43,8 @@ export const StyledWrapper = styled.div`
     }
   }
   & .recom {
+    max-height: 200px;
+    overflow-y: scroll;
     @media (min-width: 768px) {
       width: 250px;
     }
