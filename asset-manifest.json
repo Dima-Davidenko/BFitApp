@@ -1,6 +1,6 @@
 {
   "files": {
-    "main.css": "/BFitApp/static/css/main.f4ef1e7b.css",
+    "main.css": "/BFitApp/static/css/main.8f53aff9.css",
     "main.js": "/BFitApp/static/js/main.0e6027a8.js",
     "static/media/group-46.png": "/BFitApp/static/media/group-46.b07b6c9a92274bb2889d.png",
     "static/media/tablet@1x.png": "/BFitApp/static/media/tablet@1x.107e32fa1b52b2b3ed09.png",
@@ -11,11 +11,11 @@
     "index.html": "/BFitApp/index.html",
     "static/media/closeModalBtn.svg": "/BFitApp/static/media/closeModalBtn.8b0b169a772dfb2ec183581943cf2094.svg",
     "static/media/close.svg": "/BFitApp/static/media/close.8cdb920ca8331504fc3379915d48c780.svg",
-    "main.f4ef1e7b.css.map": "/BFitApp/static/css/main.f4ef1e7b.css.map",
+    "main.8f53aff9.css.map": "/BFitApp/static/css/main.8f53aff9.css.map",
     "main.0e6027a8.js.map": "/BFitApp/static/js/main.0e6027a8.js.map"
   },
   "entrypoints": [
-    "static/css/main.f4ef1e7b.css",
+    "static/css/main.8f53aff9.css",
     "static/js/main.0e6027a8.js"
   ]
 }
