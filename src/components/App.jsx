@@ -36,7 +36,7 @@ export const App = () => {
   return (
     <div className="container">
       <Routes>
-        <Route path="" element={<SharedLayout />}>
+        <Route path="/" element={<SharedLayout />}>
           <Route
             index
             element={
