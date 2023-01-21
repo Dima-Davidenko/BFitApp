@@ -1,19 +1,19 @@
-import { authReducer } from 'redux/auth/authSlice';
 import {
-  persistStore,
-  persistReducer,
   FLUSH,
-  REHYDRATE,
   PAUSE,
   PERSIST,
+  persistReducer,
+  persistStore,
   PURGE,
   REGISTER,
+  REHYDRATE,
 } from 'redux-persist';
+import { authReducer } from 'redux/auth/authSlice';
 
-import storage from 'redux-persist/lib/storage';
 import { combineReducers, configureStore } from '@reduxjs/toolkit';
-import { dietApi } from 'redux/diet/dietApi';
+import storage from 'redux-persist/lib/storage';
 import { dateReducer } from 'redux/date/dateSlice';
+import { dietApi } from 'redux/diet/dietApi';
 
 const persistConfig = {
   key: 'root',

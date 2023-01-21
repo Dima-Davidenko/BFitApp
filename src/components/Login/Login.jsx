@@ -1,12 +1,12 @@
+import { Box, Button, TextField, Typography } from '@mui/material';
 import { useDispatch, useSelector } from 'react-redux';
 import { logIn } from 'redux/auth/authOperations';
-import { Box, Button, TextField, Typography } from '@mui/material';
 
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 
-import { NavLink } from 'react-router-dom';
 import styled from '@emotion/styled';
+import { NavLink } from 'react-router-dom';
 import { selectIsRefreshing } from 'redux/auth/authSelectors';
 
 const styleBtn = {

@@ -1,7 +1,10 @@
-import { Autocomplete, Button, Icon, TextField, useMediaQuery } from '@mui/material';
+import AddIcon from '@mui/icons-material/Add';
+import { Autocomplete, Button, Icon, TextField } from '@mui/material';
+import { useFormik } from 'formik';
 import { debounce } from 'lodash';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
+import { toast } from 'react-toastify';
 import { selectAccessToken } from 'redux/auth/authSelectors';
 import { selectCurrentDate } from 'redux/date/dateSelector';
 import { updateCurrentDayId } from 'redux/date/dateSlice';
@@ -11,13 +14,9 @@ import {
   useGetUserInfoQuery,
   useSearchProductQuery,
 } from 'redux/diet/dietApi';
+import * as yup from 'yup';
 import css from './AddProductForm.module.scss';
 import { StyledDiv } from './AddProductForm.styles';
-import AddIcon from '@mui/icons-material/Add';
-import { useTheme } from '@emotion/react';
-import { toast, ToastContainer } from 'react-toastify';
-import * as yup from 'yup';
-import { useFormik } from 'formik';
 
 let toastId;
 const initialValues = {
@@ -52,11 +51,7 @@ const AddProductForm = ({ modalForm }) => {
   const [autocompleteValue, setAutocompleteValue] = useState(null);
   const [addProduct, { isLoading, isSuccess, isError }] = useAddEatenProductMutation();
 
-  const {
-    data: productsInfo = [],
-    isFetching,
-    isError: searchProductError,
-  } = useSearchProductQuery(query, {
+  const { data: productsInfo = [], isFetching } = useSearchProductQuery(query, {
     skip: !query,
   });
 

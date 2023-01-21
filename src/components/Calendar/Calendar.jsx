@@ -1,11 +1,11 @@
-import React, { useEffect, useState } from 'react';
-import { useDispatch, useSelector } from 'react-redux';
-import { updateCurrentDay } from 'redux/date/dateSlice';
-import { selectCurrentDate } from 'redux/date/dateSelector';
-import { DatePicker, DesktopDatePicker, LocalizationProvider } from '@mui/x-date-pickers';
+import { Box } from '@mui/material';
+import { DesktopDatePicker, LocalizationProvider } from '@mui/x-date-pickers';
 import { AdapterDateFns } from '@mui/x-date-pickers/AdapterDateFns';
-import { Box, TextField } from '@mui/material';
 import { format, formatISO, parseISO } from 'date-fns';
+import { useEffect, useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { selectCurrentDate } from 'redux/date/dateSelector';
+import { updateCurrentDay } from 'redux/date/dateSlice';
 import css from './Calendar.module.scss';
 
 const Calendar = () => {

@@ -3,20 +3,20 @@ import { useEffect } from 'react';
 import BackArrow from './backArrowModal.png';
 import CloseBtn from './closeModalBtn.svg';
 
+import { useDailyRateMutation } from 'redux/diet/dietApi';
 import {
-  Overlay,
-  ModalDiv,
-  CloseBtnWrapper,
   BackButton,
+  Button,
+  CloseBtnWrapper,
   CloseModalBtn,
   ContentWrap,
-  ModalTitle,
   KcalCounter,
-  Text,
+  ModalDiv,
+  ModalTitle,
+  Overlay,
   ProdList,
-  Button,
+  Text,
 } from './Modal.styled';
-import { useDailyRateMutation } from 'redux/diet/dietApi';
 
 export const Modal = ({ closeModalHandler, btnClickHandler }) => {
   const notRecommendedProducts = [];

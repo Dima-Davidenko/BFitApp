@@ -1,22 +1,22 @@
-import React, { useState } from 'react';
-import MenuIcon from '@mui/icons-material/Menu';
 import CloseIcon from '@mui/icons-material/Close';
-import css from './NewAppBar.module.scss';
+import MenuIcon from '@mui/icons-material/Menu';
+import { IconButton } from '@mui/material';
+import AuthMenu from 'components/AuthMenu/AuthMenu';
+import DiaryMenu from 'components/DiaryMenu/DiaryMenu';
+import UserMenu from 'components/UserMenu/UserMenu';
+import { useState } from 'react';
+import { useSelector } from 'react-redux';
+import { useNavigate } from 'react-router';
+import { selectIsLoggedIn } from 'redux/auth/authSelectors';
 import logoBaba from '../../assets/logo.svg';
 import slimMom from '../../assets/slimMom.svg';
-import AuthMenu from 'components/AuthMenu/AuthMenu';
-import { IconButton } from '@mui/material';
-import { useSelector } from 'react-redux';
-import { selectIsLoggedIn } from 'redux/auth/authSelectors';
-import UserMenu from 'components/UserMenu/UserMenu';
+import css from './NewAppBar.module.scss';
 import {
   StyledMobileMenu,
   StyledNavLink,
   StyledSlimMom,
   StyledUserMenuContainer,
 } from './NewAppBar.styles';
-import DiaryMenu from 'components/DiaryMenu/DiaryMenu';
-import { useNavigate } from 'react-router';
 
 const NewAppBar = () => {
   const [menuOpen, setMenuOpen] = useState(false);

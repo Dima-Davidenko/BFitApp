@@ -1,4 +1,3 @@
-import React from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { register } from 'redux/auth/authOperations';
 
@@ -7,8 +6,8 @@ import { Box, Button, TextField, Typography } from '@mui/material';
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 
-import { NavLink, useNavigate } from 'react-router-dom';
 import styled from '@emotion/styled';
+import { NavLink } from 'react-router-dom';
 import { selectIsRefreshing } from 'redux/auth/authSelectors';
 
 const styleBtn = {
@@ -61,7 +60,6 @@ const schema = yup.object().shape({
 const Registration = () => {
   const dispatch = useDispatch();
   const isRefreshing = useSelector(selectIsRefreshing);
-  const navigate = useNavigate();
   const formik = useFormik({
     initialValues,
     validationSchema: schema,

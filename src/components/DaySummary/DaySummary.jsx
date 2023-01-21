@@ -2,14 +2,10 @@ import { format, parseISO } from 'date-fns';
 import { useSelector } from 'react-redux';
 import { selectAccessToken } from 'redux/auth/authSelectors';
 import { selectCurrentDate } from 'redux/date/dateSelector';
-import {
-  useGetDayInfoQuery,
-  useGetUserInfoQuery,
-  useUserDailyRateMutation,
-} from 'redux/diet/dietApi';
-import { StyledWrapper } from './DaySummary.styled';
-import backgroundImg from '../../images/layer42.png';
+import { useGetDayInfoQuery, useGetUserInfoQuery } from 'redux/diet/dietApi';
 import backgroundTabletImg from '../../images/layer41.png';
+import backgroundImg from '../../images/layer42.png';
+import { StyledWrapper } from './DaySummary.styled';
 
 const DaySummary = () => {
   const currentDate = useSelector(selectCurrentDate);

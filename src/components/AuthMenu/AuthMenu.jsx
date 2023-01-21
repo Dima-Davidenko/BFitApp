@@ -1,4 +1,3 @@
-import React from 'react';
 import css from './AuthMenu.module.scss';
 import { StyledNavlink } from './AuthMenu.styles';
 

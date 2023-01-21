@@ -1,48 +1,22 @@
 import AddIcon from '@mui/icons-material/Add';
-import { Button, CircularProgress, Icon } from '@mui/material';
+import { Button, Icon } from '@mui/material';
 import AddProductForm from 'components/AddProductForm/AddProductForm';
 import Calendar from 'components/Calendar/Calendar';
 import DaySummary from 'components/DaySummary/DaySummary';
 import { DiaryProductsList } from 'components/DiaryProductsList/DiaryProductsList';
-import { useEffect, useState } from 'react';
-import { useSelector } from 'react-redux';
+import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
-import { toast } from 'react-toastify';
-import { selectAccessToken } from 'redux/auth/authSelectors';
-import { selectCurrentDate } from 'redux/date/dateSelector';
-import {
-  useGetDayInfoQuery,
-  useGetUserInfoQuery,
-  useUserDailyRateMutation,
-} from 'redux/diet/dietApi';
+import { useGetUserInfoQuery } from 'redux/diet/dietApi';
 import BackBtn from '../../assets/backArrowModal.png';
 import css from './Diary.module.scss';
 import { StyledBackBtn, StyledFormMenuWrapper, SWrapper } from './Diary.styles';
 const body = document.querySelector('body');
-let toastId;
 
 const Diary = () => {
   const navigate = useNavigate();
   const [formMenu, setFormMenu] = useState(false);
-  const currentDate = useSelector(selectCurrentDate);
-  const accessToken = useSelector(selectAccessToken);
-  const { data: userInfo, isLoading, isSuccess, isFetching } = useGetUserInfoQuery();
+  const { data: userInfo, isLoading } = useGetUserInfoQuery();
   const userAge = userInfo?.userData?.age;
-  const {
-    isLoading: dayInfoLoading,
-    isFetching: dayInfoFetching,
-    isSuccess: dayInfoSuccess,
-    isError: dayInfoError,
-  } = useGetDayInfoQuery(currentDate, {
-    skip: !currentDate || !accessToken || !userAge,
-  });
-
-  const [
-    ,
-    { isLoading: mutationLoading, isFetching: mutationFetching, isSuccess: mutationSuccess },
-  ] = useUserDailyRateMutation({
-    fixedCacheKey: 'daily-rate',
-  });
 
   const toggleFormModal = () => {
     setFormMenu(!formMenu);

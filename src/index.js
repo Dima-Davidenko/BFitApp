@@ -1,12 +1,12 @@
+import { createTheme, ThemeProvider } from '@mui/material';
+import { App } from 'components/App';
 import React from 'react';
 import ReactDOM from 'react-dom/client';
 import { Provider } from 'react-redux';
-import { App } from 'components/App';
-import './index.scss';
 import { BrowserRouter } from 'react-router-dom';
-import { createTheme, ThemeProvider } from '@mui/material';
-import { persistor, store } from 'redux/store/store';
 import { PersistGate } from 'redux-persist/integration/react';
+import { persistor, store } from 'redux/store/store';
+import './index.scss';
 let theme = createTheme({
   palette: {
     text: {
