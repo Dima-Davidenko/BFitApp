@@ -30,10 +30,10 @@ const Diary = () => {
           {isLoading ? (
             <span>Get information about user, please wait...</span>
           ) : (
-            <>
+            <div className="mainPageWrapper">
               <span>To calculate your diet input your data in </span>
               <Button onClick={() => navigate('/calculator')}>Calculator</Button>
-            </>
+            </div>
           )}
         </>
       )}
