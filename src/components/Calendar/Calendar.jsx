@@ -9,18 +9,14 @@ import { updateCurrentDay } from 'redux/date/dateSlice';
 import css from './Calendar.module.scss';
 
 const Calendar = () => {
-  const [date, setDate] = useState(new Date());
+  const currentDate = useSelector(selectCurrentDate);
+  let savedDate;
+  if (currentDate) {
+    savedDate = parseISO(currentDate);
+  }
+  const [date, setDate] = useState(savedDate || new Date());
   const [error, setError] = useState('');
   const dispatch = useDispatch();
-  const currentDate = useSelector(selectCurrentDate);
-
-  useEffect(() => {
-    if (!currentDate) {
-      const newDate = new Date().toJSON().slice(0, 10);
-      dispatch(updateCurrentDay(newDate));
-      setDate(parseISO(newDate));
-    }
-  }, [currentDate, dispatch]);
 
   useEffect(() => {
     try {

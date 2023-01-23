@@ -21,7 +21,7 @@ export const StyledWrapper = styled.div`
     display: block;
     min-height: 100vh;
     padding-top: 300px;
-    max-width: 500px;
+    max-width: 700px;
   }
   & .wrapper {
     @media (min-width: 768px) {
@@ -43,7 +43,7 @@ export const StyledWrapper = styled.div`
     }
   }
   & .recom {
-    max-height: 200px;
+    max-height: 150px;
     overflow-y: scroll;
     @media (min-width: 768px) {
       width: 250px;
@@ -55,6 +55,9 @@ export const StyledWrapper = styled.div`
     font-size: 14px;
     line-height: 17px;
     letter-spacing: 0.04em;
+  }
+  & .notRec {
+    margin-bottom: 0;
   }
   & .list {
     font-weight: 400;

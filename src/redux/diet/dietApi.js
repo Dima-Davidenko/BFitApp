@@ -1,4 +1,7 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
+import { toast } from 'react-toastify';
+
+let toastId;
 
 export const dietApi = createApi({
   reducerPath: 'dietApi',
@@ -64,21 +67,68 @@ export const dietApi = createApi({
       }),
       addEatenProduct: builder.mutation({
         query: ({ date = new Date().toJSON().slice(0, 10), productId, weight }) => {
+          if (!toastId) toastId = toast.loading('Add new product...');
           return {
             url: '/day',
             method: 'POST',
             body: { date, productId, weight },
           };
         },
+        transformResponse: (response, meta, arg) => {
+          if (meta?.response?.status === 201) {
+            toast.update(toastId, {
+              render: 'New product has been successfully added.',
+              type: 'success',
+              isLoading: false,
+              autoClose: 3000,
+            });
+            toastId = null;
+          }
+          return response;
+        },
+        transformErrorResponse: (response, meta, arg) => {
+          toast.update(toastId, {
+            render: 'Can not add new product. An error happened...',
+            type: 'error',
+            isLoading: false,
+            autoClose: 3000,
+          });
+          toastId = null;
+          return response.status;
+        },
         invalidatesTags: (_, _2, { date }) => [{ type: 'dayInfo', id: date }],
       }),
       deleteEatenProduct: builder.mutation({
         query: ({ dayId, eatenProductId }) => {
+          if (!toastId) toastId = toast.loading('Deleting product...');
+
           return {
             url: '/day',
             method: 'DELETE',
             body: { dayId, eatenProductId },
           };
+        },
+        transformResponse: (response, meta, arg) => {
+          if (meta?.response?.status === 201) {
+            toast.update(toastId, {
+              render: 'Product successfully deleted',
+              type: 'success',
+              isLoading: false,
+              autoClose: 3000,
+            });
+            toastId = null;
+          }
+          return response;
+        },
+        transformErrorResponse: (response, meta, arg) => {
+          toast.update(toastId, {
+            render: 'Can not delete new product. An error happened...',
+            type: 'error',
+            isLoading: false,
+            autoClose: 3000,
+          });
+          toastId = null;
+          return response.status;
         },
         invalidatesTags: (_, _2, { date }) => [{ type: 'dayInfo', id: date }],
       }),

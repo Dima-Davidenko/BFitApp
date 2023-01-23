@@ -1,4 +1,5 @@
 import { format, parseISO } from 'date-fns';
+import { useState } from 'react';
 import { useSelector } from 'react-redux';
 import { selectAccessToken } from 'redux/auth/authSelectors';
 import { selectCurrentDate } from 'redux/date/dateSelector';
@@ -8,6 +9,7 @@ import backgroundImg from '../../images/layer42.png';
 import { StyledWrapper } from './DaySummary.styled';
 
 const DaySummary = () => {
+  const [filter, setFilter] = useState('');
   const currentDate = useSelector(selectCurrentDate);
   const formattedDay = currentDate ? format(parseISO(currentDate), 'dd/MM/Y') : '';
   const accessToken = useSelector(selectAccessToken);
@@ -51,18 +53,28 @@ const DaySummary = () => {
             </div>
           </div>
         )}
-        {notRecommended.length > 0 && (
-          <div className="recom">
-            <p className="title">Food not recommended</p>
-            <ul className="list">
-              {notRecommended.map(product => (
-                <li className="item" key={product}>
-                  {product}
-                </li>
-              ))}
-            </ul>
-          </div>
-        )}
+        <div>
+          <p className="title notRec">Food not recommended</p>
+          <input
+            className="notRecFilter"
+            type="text"
+            value={filter}
+            onChange={e => setFilter(e.target.value)}
+          />
+          {notRecommended.length > 0 && (
+            <div className="recom">
+              <ul className="list">
+                {notRecommended
+                  .filter(product => product.includes(filter))
+                  .map(product => (
+                    <li className="item" key={product}>
+                      {product}
+                    </li>
+                  ))}
+              </ul>
+            </div>
+          )}
+        </div>
       </div>
     </StyledWrapper>
   );

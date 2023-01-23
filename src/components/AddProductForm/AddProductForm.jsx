@@ -18,7 +18,6 @@ import * as yup from 'yup';
 import css from './AddProductForm.module.scss';
 import { StyledDiv } from './AddProductForm.styles';
 
-let toastId;
 const initialValues = {
   weight: '',
 };
@@ -54,29 +53,6 @@ const AddProductForm = ({ modalForm }) => {
   const { data: productsInfo = [], isFetching } = useSearchProductQuery(query, {
     skip: !query,
   });
-
-  useEffect(() => {
-    if (isLoading) toastId = toast.loading('Add new product...');
-  }, [isLoading]);
-  if (isSuccess && toastId) {
-    toast.update(toastId, {
-      render: 'New product has been added.',
-      type: 'success',
-      isLoading: false,
-      autoClose: 3000,
-    });
-    toastId = null;
-  }
-
-  if (isError && toastId) {
-    toast.update(toastId, {
-      render: 'An error ocured, try again.',
-      type: 'error',
-      isLoading: false,
-      autoClose: 3000,
-    });
-    toastId = null;
-  }
 
   const handleChangeQuery = ({ target }) => {
     setQuery(target.value);

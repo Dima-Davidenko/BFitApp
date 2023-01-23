@@ -126,8 +126,6 @@ table {
 body {
   min-height: 100vh;
 }
-body.loggedOut {
-}
 
 body.modalOpen {
   overflow: hidden;
@@ -137,13 +135,6 @@ body.modalOpen {
   position: relative;
   margin: 0 auto;
   width: 100%;
-  // max-width: 450px;
-  // @media (min-width: 768px) {
-  //   max-width: 768px;
-  // }
-  // @media (min-width: 1280px) {
-  //   max-width: 1280px;
-  // }
 }
 
 .backgroundContainer {
@@ -171,4 +162,32 @@ body.modalOpen {
   padding-bottom: 50px;
   padding-left: 40px;
   margin: 0 auto;
+}
+
+/* width */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+/* Track */
+::-webkit-scrollbar-track {
+  background: #f0f1f3;
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #264061;
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #7996be;
+}
+
+.notRecFilter {
+  background-color: transparent;
+  border: none;
+  border-bottom: 1px solid #264061;
+  outline: none;
+  margin-bottom: 5px;
 }
