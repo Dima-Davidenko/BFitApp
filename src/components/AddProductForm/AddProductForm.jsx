@@ -2,7 +2,7 @@ import AddIcon from '@mui/icons-material/Add';
 import { Autocomplete, Button, Icon, TextField } from '@mui/material';
 import { useFormik } from 'formik';
 import { debounce } from 'lodash';
-import { useEffect, useRef, useState } from 'react';
+import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectAccessToken } from 'redux/auth/authSelectors';
 import { selectCurrentDate } from 'redux/date/dateSelector';
@@ -49,8 +49,6 @@ const AddProductForm = ({ modalForm }) => {
   const [key, setKey] = useState(Math.random());
   const [autocompleteValue, setAutocompleteValue] = useState(null);
   const [addProduct] = useAddEatenProductMutation();
-
-  const queryRef = useRef();
 
   const { data: productsInfo = [], isFetching } = useSearchProductQuery(query, {
     skip: !query,
