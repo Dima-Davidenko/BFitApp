@@ -4,7 +4,6 @@ import { useFormik } from 'formik';
 import { debounce } from 'lodash';
 import { useEffect, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
-import { toast } from 'react-toastify';
 import { selectAccessToken } from 'redux/auth/authSelectors';
 import { selectCurrentDate } from 'redux/date/dateSelector';
 import { updateCurrentDayId } from 'redux/date/dateSlice';
@@ -48,7 +47,7 @@ const AddProductForm = ({ modalForm }) => {
   const [query, setQuery] = useState('');
   const [prodId, setProdId] = useState('');
   const [autocompleteValue, setAutocompleteValue] = useState(null);
-  const [addProduct, { isLoading, isSuccess, isError }] = useAddEatenProductMutation();
+  const [addProduct] = useAddEatenProductMutation();
 
   const { data: productsInfo = [], isFetching } = useSearchProductQuery(query, {
     skip: !query,
