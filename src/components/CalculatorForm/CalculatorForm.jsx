@@ -13,14 +13,6 @@ import {
 import { useFormik } from 'formik';
 import * as yup from 'yup';
 
-let initialValues = {
-  age: '',
-  height: '',
-  weight: '',
-  desiredWeight: '',
-  bloodType: null,
-};
-
 const schema = yup.object().shape({
   weight: yup
     .number()
@@ -53,12 +45,20 @@ const schema = yup.object().shape({
 });
 
 const CalculatorForm = ({ onFormSubmit, userData }) => {
+  let initialValues = {
+    age: '',
+    height: '',
+    weight: '',
+    desiredWeight: '',
+    bloodType: null,
+  };
   if (userData) {
     const { age, height, weight, desiredWeight, bloodType } = userData;
     initialValues = { age, height, weight, desiredWeight, bloodType };
   }
   const formik = useFormik({
     initialValues,
+    enableReinitialize: true,
     validationSchema: schema,
     onSubmit: (values, { setSubmitting, resetForm }) => {
       onFormSubmit(values);
@@ -242,7 +242,7 @@ const CalculatorForm = ({ onFormSubmit, userData }) => {
             },
           }}
         >
-          <Button type="submit" variant="contained">
+          <Button type="submit" variant="contained" sx={{ mb: '100px' }}>
             Start loosing weight
           </Button>
         </Box>

@@ -60,6 +60,7 @@ const DaySummary = () => {
             type="text"
             value={filter}
             onChange={e => setFilter(e.target.value)}
+            placeholder="Filter products"
           />
           {notRecommended.length > 0 && (
             <div className="recom">

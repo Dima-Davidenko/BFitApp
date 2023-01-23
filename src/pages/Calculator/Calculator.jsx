@@ -30,6 +30,7 @@ const Calculator = () => {
           tablet: 4,
           laptop: 1,
         },
+        pt: { mobile: '300px', tablet: '200px', laptop: '300px' },
         width: {
           mobile: 320,
           tablet: 768,

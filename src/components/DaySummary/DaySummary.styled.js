@@ -44,7 +44,7 @@ export const StyledWrapper = styled.div`
   }
   & .recom {
     max-height: 150px;
-    overflow-y: scroll;
+    overflow-y: auto;
     @media (min-width: 768px) {
       width: 250px;
     }
@@ -57,7 +57,7 @@ export const StyledWrapper = styled.div`
     letter-spacing: 0.04em;
   }
   & .notRec {
-    margin-bottom: 0;
+    margin-bottom: 10px;
   }
   & .list {
     font-weight: 400;

@@ -4,17 +4,9 @@ export const List = styled.ul`
   display: flex;
   flex-direction: column;
   max-height: 300px;
-  overflow-y: scroll;
+  overflow-y: auto;
   width: 100%;
-  @media (min-width: 426px) {
-    overflow-y: scroll;
-    height: 244px;
-  }
-  @media (min-width: 768px) {
-    margin-bottom: 60px;
-    overflow-y: scroll;
-    height: 244px;
-  }
+  height: 244px;
   &.hidden {
     overflow: hidden;
   }

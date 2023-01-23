@@ -2,7 +2,7 @@ import AddIcon from '@mui/icons-material/Add';
 import { Autocomplete, Button, Icon, TextField } from '@mui/material';
 import { useFormik } from 'formik';
 import { debounce } from 'lodash';
-import { useEffect, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import { useDispatch, useSelector } from 'react-redux';
 import { selectAccessToken } from 'redux/auth/authSelectors';
 import { selectCurrentDate } from 'redux/date/dateSelector';
@@ -46,14 +46,18 @@ const AddProductForm = ({ modalForm }) => {
 
   const [query, setQuery] = useState('');
   const [prodId, setProdId] = useState('');
+  const [key, setKey] = useState(Math.random());
   const [autocompleteValue, setAutocompleteValue] = useState(null);
   const [addProduct] = useAddEatenProductMutation();
+
+  const queryRef = useRef();
 
   const { data: productsInfo = [], isFetching } = useSearchProductQuery(query, {
     skip: !query,
   });
 
   const handleChangeQuery = ({ target }) => {
+    console.log('target', target.value);
     setQuery(target.value);
   };
 
@@ -64,19 +68,24 @@ const AddProductForm = ({ modalForm }) => {
       addProduct({ date: currentDate, productId: prodId, weight: values.weight });
       setAutocompleteValue(null);
       setSubmitting(false);
+      setQuery('');
+      setKey(Math.random());
       resetForm();
     },
     validateOnBlur: true,
   });
-
+  let options = productsInfo;
+  if (!query) options = [];
   const debouncedHandleChangeQuery = debounce(handleChangeQuery, 300);
   return (
     <StyledDiv modalForm={modalForm}>
       <form className={css.addForm} onSubmit={formik.handleSubmit}>
         <Autocomplete
           id="combo-box-demo"
+          key={key}
           value={autocompleteValue}
-          options={productsInfo}
+          options={options}
+          clearOnBlur={false}
           getOptionLabel={option => {
             return option.title.ru;
           }}
@@ -84,7 +93,7 @@ const AddProductForm = ({ modalForm }) => {
           loading={isFetching}
           loadingText="Loading products..."
           noOptionsText="No options..."
-          onChange={(e, value) => {
+          onChange={(_, value) => {
             setProdId(value?._id);
             setAutocompleteValue(value);
           }}
@@ -92,7 +101,6 @@ const AddProductForm = ({ modalForm }) => {
             <TextField
               {...params}
               fullWidth
-              value={query || ''}
               onChange={debouncedHandleChangeQuery}
               label="Enter product name"
               sx={{ width: { mobile: '285px', tablet: '350px' } }}
