@@ -70,117 +70,119 @@ const Registration = () => {
     validateOnBlur: true,
   });
   return (
-    <Box
-      sx={{
-        display: 'flex',
-        flexDirection: 'column',
-        alignItems: {
-          tablet: 'start',
-          mobile: 'center',
-        },
-
-        paddingTop: '160px',
-        paddingLeft: '16px',
-        paddingRight: '16px',
-
-        width: {
-          laptop: '520px',
-        },
-      }}
-    >
-      <Typography
-        variant="h1"
-        sx={{
-          color: '#FC842D',
-          marginBottom: {
-            mobile: '34px',
-            tablet: '34px',
-          },
-        }}
-      >
-        REGISTER
-      </Typography>
+    <div className="logRegWrapper">
       <Box
-        component="form"
         sx={{
           display: 'flex',
           flexDirection: 'column',
-          alignItems: 'start',
-          width: '240px',
+          alignItems: {
+            tablet: 'start',
+            mobile: 'center',
+          },
+
+          paddingTop: '160px',
+          paddingLeft: '16px',
+          paddingRight: '16px',
+
+          width: {
+            laptop: '520px',
+          },
         }}
-        onSubmit={formik.handleSubmit}
       >
-        <TextField
-          name="name"
-          label="Name "
-          value={formik.values.name}
-          onChange={formik.handleChange}
-          error={formik.touched.name && Boolean(formik.errors.name)}
-          helperText={(formik.touched.name && formik.errors.name) || ' '}
+        <Typography
+          variant="h1"
           sx={{
-            width: 240,
-            marginBottom: '20px',
-          }}
-        />
-        <TextField
-          name="email"
-          label="Email "
-          value={formik.values.email}
-          onChange={formik.handleChange}
-          error={formik.touched.email && Boolean(formik.errors.email)}
-          helperText={(formik.touched.email && formik.errors.email) || ' '}
-          sx={{
-            width: 240,
-            marginBottom: '20px',
-          }}
-        />
-        <TextField
-          name="password"
-          label="Password "
-          type="password"
-          value={formik.values.password}
-          onChange={formik.handleChange}
-          error={formik.touched.password && Boolean(formik.errors.password)}
-          helperText={(formik.touched.password && formik.errors.password) || ' '}
-          sx={{
-            width: 240,
-            marginBottom: '60px',
-          }}
-        />
-
-        <Box
-          sx={{
-            display: 'flex',
-            width: {
-              tablet: '396px',
-              mobile: '100%',
-            },
-
-            height: {
-              tablet: '44px',
-              mobile: '108px',
-            },
-
-            flexDirection: {
-              tablet: 'row',
-              mobile: 'column',
-            },
-            justifyContent: {
-              tablet: 'space-between',
-              mobile: 'space-between',
-            },
-            alignItems: {
-              mobile: 'center',
+            color: '#FC842D',
+            marginBottom: {
+              mobile: '34px',
+              tablet: '34px',
             },
           }}
         >
-          <Button type="submit" variant="contained" style={styleBtn} disabled={isRefreshing}>
-            Register
-          </Button>
-          <StyledLink to="/login">Log in</StyledLink>
+          REGISTER
+        </Typography>
+        <Box
+          component="form"
+          sx={{
+            display: 'flex',
+            flexDirection: 'column',
+            alignItems: 'start',
+            width: '240px',
+          }}
+          onSubmit={formik.handleSubmit}
+        >
+          <TextField
+            name="name"
+            label="Name "
+            value={formik.values.name}
+            onChange={formik.handleChange}
+            error={formik.touched.name && Boolean(formik.errors.name)}
+            helperText={(formik.touched.name && formik.errors.name) || ' '}
+            sx={{
+              width: 240,
+              marginBottom: '20px',
+            }}
+          />
+          <TextField
+            name="email"
+            label="Email "
+            value={formik.values.email}
+            onChange={formik.handleChange}
+            error={formik.touched.email && Boolean(formik.errors.email)}
+            helperText={(formik.touched.email && formik.errors.email) || ' '}
+            sx={{
+              width: 240,
+              marginBottom: '20px',
+            }}
+          />
+          <TextField
+            name="password"
+            label="Password "
+            type="password"
+            value={formik.values.password}
+            onChange={formik.handleChange}
+            error={formik.touched.password && Boolean(formik.errors.password)}
+            helperText={(formik.touched.password && formik.errors.password) || ' '}
+            sx={{
+              width: 240,
+              marginBottom: '60px',
+            }}
+          />
+
+          <Box
+            sx={{
+              display: 'flex',
+              width: {
+                tablet: '396px',
+                mobile: '100%',
+              },
+
+              height: {
+                tablet: '44px',
+                mobile: '108px',
+              },
+
+              flexDirection: {
+                tablet: 'row',
+                mobile: 'column',
+              },
+              justifyContent: {
+                tablet: 'space-between',
+                mobile: 'space-between',
+              },
+              alignItems: {
+                mobile: 'center',
+              },
+            }}
+          >
+            <Button type="submit" variant="contained" style={styleBtn} disabled={isRefreshing}>
+              Register
+            </Button>
+            <StyledLink to="/login">Log in</StyledLink>
+          </Box>
         </Box>
       </Box>
-    </Box>
+    </div>
   );
 };
 
